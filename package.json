@@ -1,6 +1,6 @@
 {
   "name": "es-painless-fields",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Generate Painless Elasticsearch script to set / unset fields on document from JavaScript Object",
   "license": "MIT",
   "repository": "vladgolubev/es-painless-fields",
