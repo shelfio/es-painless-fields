@@ -20,6 +20,7 @@
     "index.js"
   ],
   "keywords": [],
+  "dependencies": {},
   "devDependencies": {
     "jest": "^21.2.1"
   },

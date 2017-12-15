@@ -10,6 +10,8 @@ $ yarn add es-painless-fields
 
 ## Usage
 
+WIP: Currently only simple `set` command present.
+
 ```js
 const esPainlessFields = require('es-painless-fields');
 
@@ -17,13 +19,11 @@ esPainlessFields.set({a: 1, b: 2});
 
 /*
   {
-    "script": {
-      "lang": "painless",
-      "source": "ctx._source.a = params.a; ctx._source.b = params.b;",
-      "params": {
-        "a": 1,
-        "b": 2
-      }
+    "lang": "painless",
+    "source": "ctx._source.a = params.a; ctx._source.b = params.b;",
+    "params": {
+      "a": 1,
+      "b": 2
     }
   }
  */
