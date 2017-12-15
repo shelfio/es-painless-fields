@@ -1,0 +1,31 @@
+{
+  "name": "es-painless-fields",
+  "version": "0.0.0",
+  "description": "Generate Painless Elasticsearch script to set / unset fields on document from JavaScript Object",
+  "license": "MIT",
+  "repository": "vladgolubev/es-painless-fields",
+  "author": {
+    "name": "Vlad Holubiev",
+    "email": "golubev.vld@gmail.com",
+    "url": "vladholubiev.com"
+  },
+  "engines": {
+    "node": ">=6"
+  },
+  "scripts": {
+    "coverage": "jest --coverage",
+    "test": "jest"
+  },
+  "files": [
+    "index.js"
+  ],
+  "keywords": [],
+  "devDependencies": {
+    "jest": "^21.2.1"
+  },
+  "jest": {
+    "modulePathIgnorePatterns": [
+      "component-test"
+    ]
+  }
+}
