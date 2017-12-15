@@ -13,9 +13,10 @@ $ yarn add es-painless-fields
 WIP: Currently only simple `set` command present.
 
 ```js
+const esClient = require('elasticsearch').Client();
 const esPainlessFields = require('es-painless-fields');
 
-esPainlessFields.set({a: 1, b: 2});
+const docUpdateScript = esPainlessFields.set({a: 1, b: 2});
 
 /*
   {
@@ -27,6 +28,17 @@ esPainlessFields.set({a: 1, b: 2});
     }
   }
  */
+
+
+// Now we can perform a bulk update
+esClient.updateByQuery({
+  conflicts: 'proceed',
+  body: {
+    query: {term: {user: 'kimchy'}},
+    script: docUpdateScript
+  }
+});
+
 ```
 
 ## API
