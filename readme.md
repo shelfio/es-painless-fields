@@ -13,28 +13,31 @@ $ yarn add es-painless-fields
 ```js
 const esPainlessFields = require('es-painless-fields');
 
-esPainlessFields('unicorns');
-//=> 'unicorns & rainbows'
+esPainlessFields.set({a: 1, b: 2});
+
+/*
+  {
+    "script": {
+      "lang": "painless",
+      "source": "ctx._source.a = params.a; ctx._source.b = params.b;",
+      "params": {
+        "a": 1,
+        "b": 2
+      }
+    }
+  }
+ */
 ```
 
 ## API
 
-### esPainlessFields(input, [options])
+### esPainlessFields.set(fieldsMap)
 
-#### input
+#### fieldsMap
 
-Type: `string`
+Type: `Object`
 
-Lorem ipsum.
-
-#### options
-
-##### foo
-
-Type: `boolean`<br>
-Default: `false`
-
-Lorem ipsum.
+Object fields which you would like to set.
 
 ## License
 
