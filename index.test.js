@@ -5,6 +5,18 @@ describe('#set', () => {
     expect(m.set).toBeInstanceOf(Function);
   });
 
+  it('should handle empty input', () => {
+    const fieldsMap = {};
+    const result = m.set(fieldsMap);
+
+    expect(result).toEqual({
+      lang: 'painless',
+      source: '',
+      params: {}
+    });
+  });
+
+
   it('should return a script to set 2 simple fields', () => {
     const fieldsMap = {
       a: 1,
@@ -26,6 +38,20 @@ describe('#set', () => {
 describe('#replace', () => {
   it('should export a replace function', () => {
     expect(m.replace).toBeInstanceOf(Function);
+  });
+
+  it('should handle empty input', () => {
+    const fieldsReplacements = [];
+    const result = m.replace(fieldsReplacements);
+
+    expect(result).toEqual({
+      lang: 'painless',
+      source: '',
+      params: {
+        patterns: [],
+        substrings: []
+      }
+    });
   });
 
   it('should return a script to replace 2 fields by pattern', () => {
