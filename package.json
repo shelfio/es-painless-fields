@@ -1,7 +1,7 @@
 {
   "name": "es-painless-fields",
   "version": "0.1.0",
-  "description": "Generate Painless Elasticsearch script to set / unset fields on document from JavaScript Object",
+  "description": "Helpers for bulk update Elasticsearch documents by query using Painless scripts",
   "license": "MIT",
   "repository": "vladgolubev/es-painless-fields",
   "author": {
@@ -19,7 +19,14 @@
   "files": [
     "index.js"
   ],
-  "keywords": [],
+  "keywords": [
+    "elasticsearch",
+    "bulk update",
+    "update by query",
+    "painless",
+    "scripts",
+    "replace fields"
+  ],
   "dependencies": {},
   "devDependencies": {
     "jest": "^21.2.1"

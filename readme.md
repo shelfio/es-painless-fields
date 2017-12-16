@@ -1,6 +1,6 @@
 # es-painless-fields [![Build Status](https://travis-ci.org/vladgolubev/es-painless-fields.svg?branch=master)](https://travis-ci.org/vladgolubev/es-painless-fields)
 
-> Generate Painless Elasticsearch script to set / unset fields on document from JavaScript Object
+> Helpers for bulk update Elasticsearch documents by query using Painless scripts
 
 ## Install
 
@@ -8,34 +8,29 @@
 $ yarn add es-painless-fields
 ```
 
-## Usage
+## Features & Motivation
 
-WIP: Currently only simple `set` and `replace` commands present.
+The main purpose is to utilize `_update_by_query` Elasticsearch API most efficiently.
+API is limited to updating documents in-place by scripts, so you cannot rely on ES to replace document by passing partial parameters. This package aims to ease partial bulk document updates.
+
+* In-place **set** values to fields
+* In-place **replace** values in fields
+* **Zero** dependencies!
+* ... to be done
+
+## Usage
 
 ```js
 const esClient = require('elasticsearch').Client();
-const esPainlessFields = require('es-painless-fields');
+const painlessFields = require('es-painless-fields');
 
-const docUpdateScript = esPainlessFields.set({a: 1, b: 2});
+const script = painlessFields.set({a: 1, b: 2});
 
-/*
-  {
-    "lang": "painless",
-    "source": "ctx._source.a = params.a; ctx._source.b = params.b;",
-    "params": {
-      "a": 1,
-      "b": 2
-    }
-  }
- */
-
-
-// Now we can perform a bulk update
 esClient.updateByQuery({
   conflicts: 'proceed',
   body: {
-    query: {term: {user: 'kimchy'}},
-    script: docUpdateScript
+    query: {match_all: {}},
+    script
   }
 });
 
@@ -43,15 +38,15 @@ esClient.updateByQuery({
 
 ## API
 
-### esPainlessFields.set(fieldsMap)
+### .set(fieldsMap)
 
 #### fieldsMap
 
 Type: `Object`
 
-Object fields which you would like to set.
+Object fields which you would like to set. Example: `{a: 1, b: 2}`
 
-### esPainlessFields.replace(fieldsReplacements)
+### .replace(fieldsReplacements)
 
 #### fieldsReplacements
 
