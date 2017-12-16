@@ -10,7 +10,7 @@ $ yarn add es-painless-fields
 
 ## Usage
 
-WIP: Currently only simple `set` command present.
+WIP: Currently only simple `set` and `replace` commands present.
 
 ```js
 const esClient = require('elasticsearch').Client();
@@ -50,6 +50,34 @@ esClient.updateByQuery({
 Type: `Object`
 
 Object fields which you would like to set.
+
+### esPainlessFields.replace(fieldsReplacements)
+
+#### fieldsReplacements
+
+Type: `Array`
+
+Array of objects describing what to replace. Example: 
+
+```js
+const fieldsReplacements = [
+  {field: 'a', pattern: 'foo', substring: 'bar'},
+  {field: 'b', pattern: 'hello', substring: 'world'},
+];
+``` 
+
+Returns a script which replaces fields by pattern with substrings. Example:
+
+```json
+{
+	"lang": "painless",
+	"source": "ctx._source.a = ctx._source.a.replace(params.patterns[0], params.substrings[0]); ctx._source.b = ctx._source.b.replace(params.patterns[1], params.substrings[1]);",
+	"params": {
+		"patterns": ["foo", "hello"],
+		"substrings": ["bar", "world"]
+	}
+}
+```
 
 ## License
 
