@@ -79,3 +79,4 @@ Returns a script which replaces fields by pattern with substrings. Example:
 ## License
 
 MIT © [Vlad Holubiev](https://vladholubiev.com)
+
