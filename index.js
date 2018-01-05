@@ -17,7 +17,7 @@ module.exports = {
       lang: 'painless',
       source,
       params: unflatten(fieldsMap)
-    }
+    };
   },
   /**
    * Generates a script object which replaces fields on the _source document
@@ -25,13 +25,15 @@ module.exports = {
    * @return {{lang: string, source: string, params: *}} Painless Script Object
    */
   replace(fieldsReplacements = []) {
-    const source = fieldsReplacements.map((replaceRule, i) => {
-      const sourceField = `ctx._source.${replaceRule.field}`;
-      const pattern = `params.patterns[${i}]`;
-      const substring = `params.substrings[${i}]`;
+    const source = fieldsReplacements
+      .map((replaceRule, i) => {
+        const sourceField = `ctx._source.${replaceRule.field}`;
+        const pattern = `params.patterns[${i}]`;
+        const substring = `params.substrings[${i}]`;
 
-      return `${sourceField} = ${sourceField}.replace(${pattern}, ${substring});`
-    }).join(' ');
+        return `${sourceField} = ${sourceField}.replace(${pattern}, ${substring});`;
+      })
+      .join(' ');
 
     return {
       lang: 'painless',
@@ -40,6 +42,6 @@ module.exports = {
         patterns: fieldsReplacements.map(i => i.pattern),
         substrings: fieldsReplacements.map(i => i.substring)
       }
-    }
+    };
   }
 };
