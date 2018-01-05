@@ -27,7 +27,9 @@
     "scripts",
     "replace fields"
   ],
-  "dependencies": {},
+  "dependencies": {
+    "flat": "^4.0.0"
+  },
   "devDependencies": {
     "jest": "^21.2.1"
   },

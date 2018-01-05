@@ -46,6 +46,8 @@ Type: `Object`
 
 Object fields which you would like to set. Example: `{a: 1, b: 2}`
 
+Also can be in a flat form, like `{'a.b.c': 1}`
+
 ### .replace(fieldsReplacements)
 
 #### fieldsReplacements

@@ -33,6 +33,26 @@ describe('#set', () => {
       }
     });
   });
+
+  it('should unflatten flat nested objects from params', () => {
+    const fieldsMap = {
+      'a.b.c': 1
+    };
+    const result = m.set(fieldsMap);
+
+    expect(result).toEqual({
+      lang: 'painless',
+      source: 'ctx._source.a.b.c = params.a.b.c;',
+      params: {
+        a: {
+          b: {
+            c: 1
+          }
+        }
+      }
+    });
+  });
+
 });
 
 describe('#replace', () => {

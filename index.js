@@ -1,5 +1,7 @@
 'use strict';
 
+const {unflatten} = require('flat');
+
 module.exports = {
   /**
    * Generates a script object which sets fields on the _source document
@@ -14,7 +16,7 @@ module.exports = {
     return {
       lang: 'painless',
       source,
-      params: fieldsMap
+      params: unflatten(fieldsMap)
     }
   },
   /**
