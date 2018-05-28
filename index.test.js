@@ -53,6 +53,39 @@ describe('#set', () => {
   });
 });
 
+describe('#unset', () => {
+  it('should export an unset function', () => {
+    expect(m.unset).toBeInstanceOf(Function);
+  });
+
+  it('should handle empty input', () => {
+    const result = m.unset([]);
+
+    expect(result).toEqual({
+      lang: 'painless',
+      source: ''
+    });
+  });
+
+  it('should return a script to unset 2 simple fields', () => {
+    const result = m.unset(['a', 'b']);
+
+    expect(result).toEqual({
+      lang: 'painless',
+      source: `ctx._source.remove('a') ctx._source.remove('b')`
+    });
+  });
+
+  it('should unflatten flat nested objects from params', () => {
+    const result = m.unset(['a.b.c']);
+
+    expect(result).toEqual({
+      lang: 'painless',
+      source: `ctx._source.remove('a.b.c')`
+    });
+  });
+});
+
 describe('#replace', () => {
   it('should export a replace function', () => {
     expect(m.replace).toBeInstanceOf(Function);

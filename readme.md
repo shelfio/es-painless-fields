@@ -14,6 +14,7 @@ The main purpose is to utilize `_update_by_query` Elasticsearch API most efficie
 API is limited to updating documents in-place by scripts, so you cannot rely on ES to replace document by passing partial parameters. This package aims to ease partial bulk document updates.
 
 * In-place **set** values to fields
+* In-place **unset** values to fields
 * In-place **replace** values in fields
 * **Zero** dependencies!
 * ... to be done
@@ -47,6 +48,14 @@ Type: `Object`
 Object fields which you would like to set. Example: `{a: 1, b: 2}`
 
 Also can be in a flat form, like `{'a.b.c': 1}`
+
+### .unset(fields)
+
+#### fields
+
+Type: `String[]`
+
+Array of field names which you would like to unset. Example: `['a', 'b'']`
 
 ### .replace(fieldsReplacements)
 

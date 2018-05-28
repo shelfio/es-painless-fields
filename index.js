@@ -20,6 +20,19 @@ module.exports = {
     };
   },
   /**
+   * Generates a script object which unsets fields on the _source document
+   * @param {String[]} fields Arrray of field names to unset
+   * @return {{lang: string, source: string, params: *}} Painless Script Object
+   */
+  unset(fields = []) {
+    const source = fields.map(key => `ctx._source.remove('${key}')`).join(' ');
+
+    return {
+      lang: 'painless',
+      source
+    };
+  },
+  /**
    * Generates a script object which replaces fields on the _source document
    * @param {Object[]} fieldsReplacements Array of objects describing what to replace
    * @return {{lang: string, source: string, params: *}} Painless Script Object
