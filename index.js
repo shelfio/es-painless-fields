@@ -25,7 +25,7 @@ module.exports = {
    * @return {{lang: string, source: string, params: *}} Painless Script Object
    */
   unset(fields = []) {
-    const source = fields.map(key => `ctx._source.remove('${key}')`).join(' ');
+    const source = fields.map(key => `ctx._source.remove('${key}')`).join('; ');
 
     return {
       lang: 'painless',

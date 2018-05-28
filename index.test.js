@@ -72,7 +72,7 @@ describe('#unset', () => {
 
     expect(result).toEqual({
       lang: 'painless',
-      source: `ctx._source.remove('a') ctx._source.remove('b')`
+      source: `ctx._source.remove('a'); ctx._source.remove('b')`
     });
   });
 
