@@ -1,4 +1,4 @@
-# es-painless-fields [![Build Status](https://travis-ci.org/vladgolubev/es-painless-fields.svg?branch=master)](https://travis-ci.org/vladgolubev/es-painless-fields) ![](https://img.shields.io/badge/code_style-prettier-ff69b4.svg) ![node](https://img.shields.io/node/v/es-painless-fields.svg)
+# es-painless-fields ![CircleCI](https://img.shields.io/circleci/project/github/vladgolubev/es-painless-fields.svg) ![](https://img.shields.io/badge/code_style-prettier-ff69b4.svg) ![node](https://img.shields.io/node/v/es-painless-fields.svg)
 
 > Helpers for bulk update Elasticsearch documents by query using Painless scripts
 
