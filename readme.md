@@ -17,7 +17,9 @@ API is limited to updating documents in-place by scripts, so you cannot rely on 
 * In-place **unset** values to fields
 * In-place **replace** values in fields
 * In-place **increment** values in fields
+* In-place **decrement** values in fields
 * In-place **multiply** values in fields
+* In-place **divide** values in fields
 * **Zero** dependencies!
 * ... to be done
 
