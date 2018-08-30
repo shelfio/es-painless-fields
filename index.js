@@ -59,10 +59,10 @@ module.exports = {
   },
   /**
    * Generates a script object which increments fields on the _source document
-   * @param {Object[]} fieldsReplacements Array of objects describing what to replace
+   * @param {Object} fieldsMap Object with fields to increment
    * @return {{lang: string, source: string, params: *}} Painless Script Object
    */
-  increment(fieldsMap = []) {
+  increment(fieldsMap = {}) {
     const source = Object.keys(fieldsMap)
       .map(key => `ctx._source.${key} += params._inc.${key};`)
       .join(' ');
@@ -75,10 +75,26 @@ module.exports = {
   },
   /**
    * Generates a script object which multiplies fields on the _source document
-   * @param {Object[]} fieldsReplacements Array of objects describing what to replace
+   * @param {Object} fieldsMap Object with fields to decrement
    * @return {{lang: string, source: string, params: *}} Painless Script Object
    */
-  multiply(fieldsMap = []) {
+  decrement(fieldsMap = {}) {
+    const source = Object.keys(fieldsMap)
+      .map(key => `ctx._source.${key} -= params._dec.${key};`)
+      .join(' ');
+
+    return {
+      lang: 'painless',
+      source,
+      params: source ? {_dec: unflatten(fieldsMap)} : {}
+    };
+  },
+  /**
+   * Generates a script object which multiplies fields on the _source document
+   * @param {Object} fieldsMap Object with fields to multiply
+   * @return {{lang: string, source: string, params: *}} Painless Script Object
+   */
+  multiply(fieldsMap = {}) {
     const source = Object.keys(fieldsMap)
       .map(key => `ctx._source.${key} *= params._mul.${key};`)
       .join(' ');
@@ -87,6 +103,22 @@ module.exports = {
       lang: 'painless',
       source,
       params: source ? {_mul: unflatten(fieldsMap)} : {}
+    };
+  },
+  /**
+   * Generates a script object which multiplies fields on the _source document
+   * @param {Object} fieldsMap Object with fields to divide
+   * @return {{lang: string, source: string, params: *}} Painless Script Object
+   */
+  divide(fieldsMap = {}) {
+    const source = Object.keys(fieldsMap)
+      .map(key => `ctx._source.${key} /= params._div.${key};`)
+      .join(' ');
+
+    return {
+      lang: 'painless',
+      source,
+      params: source ? {_div: unflatten(fieldsMap)} : {}
     };
   }
 };
