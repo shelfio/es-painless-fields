@@ -69,6 +69,16 @@ Object fields which you would like to increment. Example: `{a: 1, b: 2}`
 
 Also can be in a flat form, like `{'a.b.c': 1}`
 
+### .decrement(fieldsMap)
+
+#### fieldsMap
+
+Type: `Object`
+
+Object fields which you would like to decrement. Example: `{a: 1, b: 2}`
+
+Also can be in a flat form, like `{'a.b.c': 1}`
+
 ### .multiply(fieldsMap)
 
 #### fieldsMap
@@ -79,6 +89,15 @@ Object fields which you would like to multiply. Example: `{a: 1, b: 2}`
 
 Also can be in a flat form, like `{'a.b.c': 1}`
 
+### .divide(fieldsMap)
+
+#### fieldsMap
+
+Type: `Object`
+
+Object fields which you would like to divide. Example: `{a: 1, b: 2}`
+
+Also can be in a flat form, like `{'a.b.c': 1}`
 
 ### .replace(fieldsReplacements)
 
