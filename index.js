@@ -74,7 +74,7 @@ module.exports = {
     };
   },
   /**
-   * Generates a script object which multiplies fields on the _source document
+   * Generates a script object which decrements fields on the _source document
    * @param {Object} fieldsMap Object with fields to decrement
    * @return {{lang: string, source: string, params: *}} Painless Script Object
    */
@@ -106,7 +106,7 @@ module.exports = {
     };
   },
   /**
-   * Generates a script object which multiplies fields on the _source document
+   * Generates a script object which divides fields on the _source document
    * @param {Object} fieldsMap Object with fields to divide
    * @return {{lang: string, source: string, params: *}} Painless Script Object
    */
