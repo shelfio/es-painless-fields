@@ -29,14 +29,14 @@
     "replace fields"
   ],
   "dependencies": {
-    "flat": "^4.0.0"
+    "flat": "4.1.0"
   },
   "devDependencies": {
-    "eslint": "^4.14.0",
-    "eslint-config-prettier": "^2.9.0",
-    "eslint-plugin-prettier": "^2.4.0",
-    "jest": "^21.2.1",
-    "prettier": "^1.9.2"
+    "eslint": "4.19.1",
+    "eslint-config-prettier": "2.10.0",
+    "eslint-plugin-prettier": "2.6.2",
+    "jest": "21.2.1",
+    "prettier": "1.14.2"
   },
   "jest": {
     "modulePathIgnorePatterns": [
