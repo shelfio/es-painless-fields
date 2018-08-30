@@ -123,3 +123,117 @@ describe('#replace', () => {
     });
   });
 });
+
+describe('#increment', () => {
+  it('should export a increment function', () => {
+    expect(m.increment).toBeInstanceOf(Function);
+  });
+
+  it('should handle empty input', () => {
+    const fieldsMap = {};
+    const result = m.increment(fieldsMap);
+
+    expect(result).toEqual({
+      lang: 'painless',
+      source: '',
+      params: {}
+    });
+  });
+
+  it('should return a script to set 2 simple fields', () => {
+    const fieldsMap = {
+      a: 1,
+      b: 2
+    };
+    const result = m.increment(fieldsMap);
+
+    expect(result).toEqual({
+      lang: 'painless',
+      source: 'ctx._source.a += params._inc.a; ctx._source.b += params._inc.b;',
+      params: {
+        _inc: {
+          a: 1,
+          b: 2
+        }
+      }
+    });
+  });
+
+  it('should unflatten flat nested objects from params', () => {
+    const fieldsMap = {
+      'a.b.c': 1
+    };
+    const result = m.increment(fieldsMap);
+
+    expect(result).toEqual({
+      lang: 'painless',
+      source: 'ctx._source.a.b.c += params._inc.a.b.c;',
+      params: {
+        _inc: {
+          a: {
+            b: {
+              c: 1
+            }
+          }
+        }
+      }
+    });
+  });
+});
+
+describe('#multiply', () => {
+  it('should export a multiply function', () => {
+    expect(m.multiply).toBeInstanceOf(Function);
+  });
+
+  it('should handle empty input', () => {
+    const fieldsMap = {};
+    const result = m.multiply(fieldsMap);
+
+    expect(result).toEqual({
+      lang: 'painless',
+      source: '',
+      params: {}
+    });
+  });
+
+  it('should return a script to set 2 simple fields', () => {
+    const fieldsMap = {
+      a: 1,
+      b: 2
+    };
+    const result = m.multiply(fieldsMap);
+
+    expect(result).toEqual({
+      lang: 'painless',
+      source: 'ctx._source.a *= params._mul.a; ctx._source.b *= params._mul.b;',
+      params: {
+        _mul: {
+          a: 1,
+          b: 2
+        }
+      }
+    });
+  });
+
+  it('should unflatten flat nested objects from params', () => {
+    const fieldsMap = {
+      'a.b.c': 1
+    };
+    const result = m.multiply(fieldsMap);
+
+    expect(result).toEqual({
+      lang: 'painless',
+      source: 'ctx._source.a.b.c *= params._mul.a.b.c;',
+      params: {
+        _mul: {
+          a: {
+            b: {
+              c: 1
+            }
+          }
+        }
+      }
+    });
+  });
+});

@@ -16,6 +16,8 @@ API is limited to updating documents in-place by scripts, so you cannot rely on 
 * In-place **set** values to fields
 * In-place **unset** values to fields
 * In-place **replace** values in fields
+* In-place **increment** values in fields
+* In-place **multiply** values in fields
 * **Zero** dependencies!
 * ... to be done
 
@@ -57,20 +59,41 @@ Type: `String[]`
 
 Array of field names which you would like to unset. Example: `['a', 'b'']`
 
+### .increment(fieldsMap)
+
+#### fieldsMap
+
+Type: `Object`
+
+Object fields which you would like to increment. Example: `{a: 1, b: 2}`
+
+Also can be in a flat form, like `{'a.b.c': 1}`
+
+### .multiply(fieldsMap)
+
+#### fieldsMap
+
+Type: `Object`
+
+Object fields which you would like to multiply. Example: `{a: 1, b: 2}`
+
+Also can be in a flat form, like `{'a.b.c': 1}`
+
+
 ### .replace(fieldsReplacements)
 
 #### fieldsReplacements
 
 Type: `Array`
 
-Array of objects describing what to replace. Example: 
+Array of objects describing what to replace. Example:
 
 ```js
 const fieldsReplacements = [
   {field: 'a', pattern: 'foo', substring: 'bar'},
   {field: 'b', pattern: 'hello', substring: 'world'},
 ];
-``` 
+```
 
 Returns a script which replaces fields by pattern with substrings. Example:
 

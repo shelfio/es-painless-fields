@@ -56,5 +56,37 @@ module.exports = {
         substrings: fieldsReplacements.map(i => i.substring)
       }
     };
+  },
+  /**
+   * Generates a script object which increments fields on the _source document
+   * @param {Object[]} fieldsReplacements Array of objects describing what to replace
+   * @return {{lang: string, source: string, params: *}} Painless Script Object
+   */
+  increment(fieldsMap = []) {
+    const source = Object.keys(fieldsMap)
+      .map(key => `ctx._source.${key} += params._inc.${key};`)
+      .join(' ');
+
+    return {
+      lang: 'painless',
+      source,
+      params: source ? {_inc: unflatten(fieldsMap)} : {}
+    };
+  },
+  /**
+   * Generates a script object which multiplies fields on the _source document
+   * @param {Object[]} fieldsReplacements Array of objects describing what to replace
+   * @return {{lang: string, source: string, params: *}} Painless Script Object
+   */
+  multiply(fieldsMap = []) {
+    const source = Object.keys(fieldsMap)
+      .map(key => `ctx._source.${key} *= params._mul.${key};`)
+      .join(' ');
+
+    return {
+      lang: 'painless',
+      source,
+      params: source ? {_mul: unflatten(fieldsMap)} : {}
+    };
   }
 };
