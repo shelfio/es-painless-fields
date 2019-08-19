@@ -13,15 +13,15 @@ $ yarn add es-painless-fields
 The main purpose is to utilize `_update_by_query` Elasticsearch API most efficiently.
 API is limited to updating documents in-place by scripts, so you cannot rely on ES to replace document by passing partial parameters. This package aims to ease partial bulk document updates.
 
-* In-place **set** values to fields
-* In-place **unset** values to fields
-* In-place **replace** values in fields
-* In-place **increment** values in fields
-* In-place **decrement** values in fields
-* In-place **multiply** values in fields
-* In-place **divide** values in fields
-* **Zero** dependencies!
-* ... to be done
+- In-place **set** values to fields
+- In-place **unset** values to fields
+- In-place **replace** values in fields
+- In-place **increment** values in fields
+- In-place **decrement** values in fields
+- In-place **multiply** values in fields
+- In-place **divide** values in fields
+- **Zero** dependencies!
+- ... to be done
 
 ## Usage
 
@@ -38,7 +38,6 @@ esClient.updateByQuery({
     script
   }
 });
-
 ```
 
 ## API
@@ -112,7 +111,7 @@ Array of objects describing what to replace. Example:
 ```js
 const fieldsReplacements = [
   {field: 'a', pattern: 'foo', substring: 'bar'},
-  {field: 'b', pattern: 'hello', substring: 'world'},
+  {field: 'b', pattern: 'hello', substring: 'world'}
 ];
 ```
 
@@ -120,17 +119,15 @@ Returns a script which replaces fields by pattern with substrings. Example:
 
 ```json
 {
-	"lang": "painless",
-	"source": "ctx._source.a = ctx._source.a.replace(params.patterns[0], params.substrings[0]); ctx._source.b = ctx._source.b.replace(params.patterns[1], params.substrings[1]);",
-	"params": {
-		"patterns": ["foo", "hello"],
-		"substrings": ["bar", "world"]
-	}
+  "lang": "painless",
+  "source": "ctx._source.a = ctx._source.a.replace(params.patterns[0], params.substrings[0]); ctx._source.b = ctx._source.b.replace(params.patterns[1], params.substrings[1]);",
+  "params": {
+    "patterns": ["foo", "hello"],
+    "substrings": ["bar", "world"]
+  }
 }
 ```
 
 ## License
 
-MIT © [Vlad Holubiev](https://vladholubiev.com)
-
-
+MIT © [Shelf](https://shelf.io)
