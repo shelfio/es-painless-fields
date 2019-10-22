@@ -29,7 +29,7 @@
     "replace fields"
   ],
   "dependencies": {
-    "flat": "4.1.0"
+    "flat": "5.0.0"
   },
   "devDependencies": {
     "@shelf/eslint-config": "0.8.2",
