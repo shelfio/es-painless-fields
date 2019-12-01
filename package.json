@@ -1,6 +1,6 @@
 {
   "name": "es-painless-fields",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "Helpers for bulk update Elasticsearch documents by query using Painless scripts",
   "license": "MIT",
   "repository": "vladgolubev/es-painless-fields",
