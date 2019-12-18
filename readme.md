@@ -5,7 +5,7 @@
 ## Install
 
 ```
-$ yarn add es-painless-fields
+$ yarn add @shelf/es-painless-fields
 ```
 
 ## Features & Motivation

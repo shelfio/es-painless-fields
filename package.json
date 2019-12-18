@@ -1,20 +1,21 @@
 {
-  "name": "es-painless-fields",
+  "name": "@shelf/es-painless-fields",
   "version": "0.5.1",
   "description": "Helpers for bulk update Elasticsearch documents by query using Painless scripts",
   "license": "MIT",
-  "repository": "vladgolubev/es-painless-fields",
+  "repository": "shelfio/es-painless-fields",
   "author": {
     "name": "Vlad Holubiev",
-    "email": "golubev.vld@gmail.com",
-    "url": "vladholubiev.com"
+    "email": "vlad@shelf.io",
+    "url": "shelf.io"
   },
   "engines": {
     "node": ">=8"
   },
   "scripts": {
     "coverage": "jest --coverage",
-    "lint": "eslint . --fix",
+    "lint": "eslint . --ext .js,.ts,.json --fix",
+    "lint:ci": "eslint . --ext .js,.ts,.json",
     "test": "jest"
   },
   "files": [
@@ -57,5 +58,8 @@
       "prettier --write --ignore-path=./.eslintignore",
       "git add"
     ]
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
