@@ -27,7 +27,7 @@ API is limited to updating documents in-place by scripts, so you cannot rely on 
 
 ```js
 const esClient = require('elasticsearch').Client();
-const painlessFields = require('es-painless-fields');
+const painlessFields = require('@shelf/es-painless-fields');
 
 const script = painlessFields.set({a: 1, b: 2});
 
