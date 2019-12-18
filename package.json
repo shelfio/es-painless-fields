@@ -1,6 +1,6 @@
 {
   "name": "@shelf/es-painless-fields",
-  "version": "0.5.2",
+  "version": "0.5.3",
   "description": "Helpers for bulk update Elasticsearch documents by query using Painless scripts",
   "license": "MIT",
   "repository": "shelfio/es-painless-fields",
