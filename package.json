@@ -10,16 +10,21 @@
     "url": "shelf.io"
   },
   "engines": {
-    "node": ">=8"
+    "node": ">=12"
   },
   "scripts": {
     "coverage": "jest --coverage",
     "lint": "eslint . --ext .js,.ts,.json --fix",
-    "lint:ci": "eslint . --ext .js,.ts,.json",
-    "test": "jest"
+    "lint:ci": "eslint . --ext .js,.ts,.json --quiet",
+    "test": "jest src",
+    "prepack": "yarn build",
+    "type-check": "tsc --noEmit",
+    "type-check:watch": "npm run type-check -- --watch",
+    "build": "rm -rf lib/ && yarn build:types && babel src --out-dir lib --ignore '**/*.test.ts' --extensions '.ts'",
+    "build:types": "tsc --emitDeclarationOnly --declaration --isolatedModules false --declarationDir lib"
   },
   "files": [
-    "index.js"
+    "lib"
   ],
   "keywords": [
     "elasticsearch",
@@ -33,12 +38,20 @@
     "flat": "5.0.0"
   },
   "devDependencies": {
+    "@babel/cli": "7.8.3",
+    "@babel/core": "7.8.3",
+    "@babel/preset-env": "7.8.3",
+    "@babel/preset-typescript": "7.8.3",
     "@shelf/eslint-config": "0.13.0",
+    "@types/flat": "0.0.28",
+    "@types/jest": "24.0.25",
+    "@types/node": "13.1.6",
     "eslint": "6.8.0",
     "husky": "3.1.0",
     "jest": "24.9.0",
     "lint-staged": "9.5.0",
-    "prettier": "1.19.1"
+    "prettier": "1.19.1",
+    "typescript": "3.7.4"
   },
   "jest": {
     "testEnvironment": "node"
