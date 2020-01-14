@@ -26,6 +26,8 @@
   "files": [
     "lib"
   ],
+  "main": "lib",
+  "types": "lib/index.d.ts",
   "keywords": [
     "elasticsearch",
     "bulk update",
@@ -45,7 +47,7 @@
     "@shelf/eslint-config": "0.13.0",
     "@types/flat": "0.0.28",
     "@types/jest": "24.0.25",
-    "@types/node": "13.1.6",
+    "@types/node": "12",
     "eslint": "6.8.0",
     "husky": "3.1.0",
     "jest": "24.9.0",

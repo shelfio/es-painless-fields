@@ -1,13 +1,13 @@
 import {unflatten} from 'flat';
 
-interface PainlessField {
-  lang: string;
+interface PainlessScript {
+  lang: 'painless';
   source: string;
-  params?: {};
+  params?: object;
 }
 
 export default {
-  set(fieldsMap: object = {}): PainlessField {
+  set(fieldsMap: object = {}): PainlessScript {
     const source = Object.keys(fieldsMap)
       .map(key => `ctx._source.${key} = params.${key};`)
       .join(' ');
@@ -19,7 +19,7 @@ export default {
     };
   },
 
-  unset(fields: string[] = []): PainlessField {
+  unset(fields: string[] = []): PainlessScript {
     const source = fields.map(key => `ctx._source.remove('${key}')`).join('; ');
 
     return {
@@ -34,7 +34,7 @@ export default {
       pattern: string;
       substring: string;
     }[] = []
-  ): PainlessField {
+  ): PainlessScript {
     const source = fieldsReplacements
       .map((replaceRule, i) => {
         const sourceField = `ctx._source.${replaceRule.field}`;
@@ -55,7 +55,7 @@ export default {
     };
   },
 
-  increment(fieldsMap: object = {}): PainlessField {
+  increment(fieldsMap: object = {}): PainlessScript {
     const source = Object.keys(fieldsMap)
       .map(key => `ctx._source.${key} += params._inc.${key};`)
       .join(' ');
@@ -67,7 +67,7 @@ export default {
     };
   },
 
-  decrement(fieldsMap: object = {}): PainlessField {
+  decrement(fieldsMap: object = {}): PainlessScript {
     const source = Object.keys(fieldsMap)
       .map(key => `ctx._source.${key} -= params._dec.${key};`)
       .join(' ');
@@ -79,7 +79,7 @@ export default {
     };
   },
 
-  multiply(fieldsMap: object = {}): PainlessField {
+  multiply(fieldsMap: object = {}): PainlessScript {
     const source = Object.keys(fieldsMap)
       .map(key => `ctx._source.${key} *= params._mul.${key};`)
       .join(' ');
@@ -91,7 +91,7 @@ export default {
     };
   },
 
-  divide(fieldsMap: object = {}): PainlessField {
+  divide(fieldsMap: object = {}): PainlessScript {
     const source = Object.keys(fieldsMap)
       .map(key => `ctx._source.${key} /= params._div.${key};`)
       .join(' ');
