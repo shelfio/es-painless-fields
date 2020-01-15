@@ -1,4 +1,4 @@
-const m = require('.');
+import m from './index';
 
 describe('#set', () => {
   it('should export a set function', () => {
