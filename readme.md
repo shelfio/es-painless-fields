@@ -20,7 +20,6 @@ API is limited to updating documents in-place by scripts, so you cannot rely on 
 - In-place **decrement** values in fields
 - In-place **multiply** values in fields
 - In-place **divide** values in fields
-- **Zero** dependencies!
 - ... to be done
 
 ## Usage
