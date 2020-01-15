@@ -6,7 +6,7 @@ interface PainlessScript {
   params?: object;
 }
 
-export default {
+const main = {
   set(fieldsMap: object = {}): PainlessScript {
     const source = Object.keys(fieldsMap)
       .map(key => `ctx._source.${key} = params.${key};`)
@@ -103,3 +103,6 @@ export default {
     };
   }
 };
+
+export default main;
+module.exports = main;

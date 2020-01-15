@@ -3,12 +3,12 @@
   "version": "0.5.3",
   "description": "Helpers for bulk update Elasticsearch documents by query using Painless scripts",
   "keywords": [
-    "elasticsearch",
     "bulk update",
-    "update by query",
+    "elasticsearch",
     "painless",
+    "replace fields",
     "scripts",
-    "replace fields"
+    "update by query"
   ],
   "repository": "shelfio/es-painless-fields",
   "license": "MIT",
