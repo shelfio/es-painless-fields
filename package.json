@@ -62,7 +62,7 @@
     "@babel/preset-typescript": "7.8.3",
     "@shelf/eslint-config": "0.14.0",
     "@types/flat": "0.0.28",
-    "@types/jest": "24.9.0",
+    "@types/jest": "24.9.1",
     "@types/node": "12",
     "eslint": "6.8.0",
     "husky": "4.2.0",
