@@ -56,10 +56,10 @@
     "flat": "5.0.0"
   },
   "devDependencies": {
-    "@babel/cli": "7.8.4",
-    "@babel/core": "7.8.4",
-    "@babel/preset-env": "7.8.4",
-    "@babel/preset-typescript": "7.8.3",
+    "@babel/cli": "7.10.5",
+    "@babel/core": "7.11.1",
+    "@babel/preset-env": "7.11.0",
+    "@babel/preset-typescript": "7.10.4",
     "@shelf/eslint-config": "0.16.0",
     "@types/flat": "0.0.28",
     "@types/jest": "26.0.3",
@@ -69,7 +69,7 @@
     "jest": "26.1.0",
     "lint-staged": "10.2.6",
     "prettier": "1.19.1",
-    "typescript": "3.7.5"
+    "typescript": "3.9.7"
   },
   "engines": {
     "node": ">=12"
