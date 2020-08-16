@@ -64,11 +64,11 @@
     "@types/flat": "0.0.28",
     "@types/jest": "26.0.9",
     "@types/node": "12",
-    "eslint": "6.8.0",
+    "eslint": "7.7.0",
     "husky": "4.2.5",
     "jest": "26.2.2",
     "lint-staged": "10.2.6",
-    "prettier": "1.19.1",
+    "prettier": "2.0.5",
     "typescript": "3.7.5"
   },
   "engines": {
