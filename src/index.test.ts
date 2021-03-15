@@ -125,7 +125,7 @@ describe('#replace', () => {
 });
 
 describe('#replaceSubArray', () => {
-  it('should export a replace function', () => {
+  it('should export a replaceSubArray function', () => {
     expect(m.replaceSubArray).toBeInstanceOf(Function);
   });
 
@@ -143,7 +143,7 @@ describe('#replaceSubArray', () => {
     });
   });
 
-  it('should return a script to replace 2 fields by pattern', () => {
+  it('should return a script to replaceSubArray in 2 fields by old subArray with newArray', () => {
     const fieldsReplacements = [
       {field: 'a', subArray: ['1', '2'], newArray: ['10', '20']},
       {field: 'b', subArray: ['3', '4'], newArray: ['30', '40']}
