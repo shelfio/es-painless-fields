@@ -55,6 +55,33 @@ const main = {
     };
   },
 
+  replaceSubArray(
+    fieldsReplacements: {
+      field: string;
+      subArray: string[];
+      newArray: string[];
+    }[] = []
+  ): PainlessScript {
+    const source = fieldsReplacements
+      .map((replaceRule, i) => {
+        const sourceField = `ctx._source.${replaceRule.field}`;
+        const subArray = `params.subArrays[${i}]`;
+        const newArray = `params.newArrays[${i}]`;
+
+        return `for (int j=0;j<${subArray}.length;j++) { if (${sourceField}.contains(${subArray}[j])) { ${sourceField}.remove(${sourceField}.indexOf(${subArray}[j])); } } ${sourceField}.addAll(${newArray}); `;
+      })
+      .join(' ');
+
+    return {
+      lang: 'painless',
+      source,
+      params: {
+        subArrays: fieldsReplacements.map(i => i.subArray),
+        newArrays: fieldsReplacements.map(i => i.newArray)
+      }
+    };
+  },
+
   increment(fieldsMap: object = {}): PainlessScript {
     const source = Object.keys(fieldsMap)
       .map(key => `ctx._source.${key} += params._inc.${key};`)

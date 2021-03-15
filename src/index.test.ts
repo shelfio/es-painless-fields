@@ -124,6 +124,50 @@ describe('#replace', () => {
   });
 });
 
+describe('#replaceSubArray', () => {
+  it('should export a replace function', () => {
+    expect(m.replaceSubArray).toBeInstanceOf(Function);
+  });
+
+  it('should handle empty input', () => {
+    const fieldsReplacements = [];
+    const result = m.replaceSubArray(fieldsReplacements);
+
+    expect(result).toEqual({
+      lang: 'painless',
+      source: '',
+      params: {
+        subArrays: [],
+        newArrays: []
+      }
+    });
+  });
+
+  it('should return a script to replace 2 fields by pattern', () => {
+    const fieldsReplacements = [
+      {field: 'a', subArray: ['1', '2'], newArray: ['10', '20']},
+      {field: 'b', subArray: ['3', '4'], newArray: ['30', '40']}
+    ];
+    const result = m.replaceSubArray(fieldsReplacements);
+
+    expect(result).toEqual({
+      lang: 'painless',
+      params: {
+        newArrays: [
+          ['10', '20'],
+          ['30', '40']
+        ],
+        subArrays: [
+          ['1', '2'],
+          ['3', '4']
+        ]
+      },
+      source:
+        'for (int j=0;j<params.subArrays[0].length;j++) { if (ctx._source.a.contains(params.subArrays[0][j])) { ctx._source.a.remove(ctx._source.a.indexOf(params.subArrays[0][j])); } } ctx._source.a.addAll(params.newArrays[0]);  for (int j=0;j<params.subArrays[1].length;j++) { if (ctx._source.b.contains(params.subArrays[1][j])) { ctx._source.b.remove(ctx._source.b.indexOf(params.subArrays[1][j])); } } ctx._source.b.addAll(params.newArrays[1]); '
+    });
+  });
+});
+
 describe('#increment', () => {
   it('should export a increment function', () => {
     expect(m.increment).toBeInstanceOf(Function);
