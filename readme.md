@@ -127,6 +127,34 @@ Returns a script which replaces fields by pattern with substrings. Example:
 }
 ```
 
+### .replaceSubArray(fieldsReplacements)
+
+#### fieldsReplacements
+
+Type: `Array`
+
+Array of objects describing what subarray to replace with new array. Example:
+
+```js
+const fieldsReplacements = [
+  {field: 'a', subArray: ['1', '2'], newArray: ['10', '20']},
+  {field: 'b', subArray: ['3', '4'], newArray: ['30', '40']}
+];
+```
+
+Returns a script which replaces fields by old subarray with new array. Example:
+
+```json
+{
+  "lang": "painless",
+  "source": "for (int j=0;j<params.subArrays[0].length;j++) { if (ctx._source.a.contains(params.subArrays[0][j])) { ctx._source.a.remove(ctx._source.a.indexOf(params.subArrays[0][j])); } } ctx._source.a.addAll(params.newArrays[0]);  for (int j=0;j<params.subArrays[1].length;j++) { if (ctx._source.b.contains(params.subArrays[1][j])) { ctx._source.b.remove(ctx._source.b.indexOf(params.subArrays[1][j])); } } ctx._source.b.addAll(params.newArrays[1]); ",
+  "params": {
+    "subArrays": [["1", "2"], ["3", "4"]],
+    "substrings": [["10", "20"], ["30", "40"]]
+  }
+}
+```
+
 ## License
 
 MIT © [Shelf](https://shelf.io)
