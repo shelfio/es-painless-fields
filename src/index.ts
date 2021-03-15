@@ -3,11 +3,11 @@ import {unflatten} from 'flat';
 interface PainlessScript {
   lang: 'painless';
   source: string;
-  params?: object;
+  params?: Record<string, unknown>;
 }
 
 const main = {
-  set(fieldsMap: object = {}): PainlessScript {
+  set(fieldsMap: Record<string, unknown> = {}): PainlessScript {
     const source = Object.keys(fieldsMap)
       .map(key => `ctx._source.${key} = params.${key};`)
       .join(' ');
@@ -82,7 +82,7 @@ const main = {
     };
   },
 
-  increment(fieldsMap: object = {}): PainlessScript {
+  increment(fieldsMap: Record<string, unknown> = {}): PainlessScript {
     const source = Object.keys(fieldsMap)
       .map(key => `ctx._source.${key} += params._inc.${key};`)
       .join(' ');
@@ -94,7 +94,7 @@ const main = {
     };
   },
 
-  decrement(fieldsMap: object = {}): PainlessScript {
+  decrement(fieldsMap: Record<string, unknown> = {}): PainlessScript {
     const source = Object.keys(fieldsMap)
       .map(key => `ctx._source.${key} -= params._dec.${key};`)
       .join(' ');
@@ -106,7 +106,7 @@ const main = {
     };
   },
 
-  multiply(fieldsMap: object = {}): PainlessScript {
+  multiply(fieldsMap: Record<string, unknown> = {}): PainlessScript {
     const source = Object.keys(fieldsMap)
       .map(key => `ctx._source.${key} *= params._mul.${key};`)
       .join(' ');
@@ -118,7 +118,7 @@ const main = {
     };
   },
 
-  divide(fieldsMap: object = {}): PainlessScript {
+  divide(fieldsMap: Record<string, unknown> = {}): PainlessScript {
     const source = Object.keys(fieldsMap)
       .map(key => `ctx._source.${key} /= params._div.${key};`)
       .join(' ');
