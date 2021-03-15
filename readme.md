@@ -127,6 +127,15 @@ Returns a script which replaces fields by pattern with substrings. Example:
 }
 ```
 
+## Publish
+
+```sh
+$ git checkout master
+$ yarn version
+$ yarn publish
+$ git push origin master --tags
+```
+
 ## License
 
 MIT © [Shelf](https://shelf.io)
