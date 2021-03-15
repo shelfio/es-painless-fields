@@ -3,11 +3,11 @@ import {unflatten} from 'flat';
 interface PainlessScript {
   lang: 'painless';
   source: string;
-  params?: object;
+  params?: Record<string, unknown>;
 }
 
 const main = {
-  set(fieldsMap: object = {}): PainlessScript {
+  set(fieldsMap: Record<string, unknown> = {}): PainlessScript {
     const source = Object.keys(fieldsMap)
       .map(key => `ctx._source.${key} = params.${key};`)
       .join(' ');
@@ -55,7 +55,34 @@ const main = {
     };
   },
 
-  increment(fieldsMap: object = {}): PainlessScript {
+  replaceSubArray(
+    fieldsReplacements: {
+      field: string;
+      subArray: string[];
+      newArray: string[];
+    }[] = []
+  ): PainlessScript {
+    const source = fieldsReplacements
+      .map((replaceRule, i) => {
+        const sourceField = `ctx._source.${replaceRule.field}`;
+        const subArray = `params.subArrays[${i}]`;
+        const newArray = `params.newArrays[${i}]`;
+
+        return `for (int j=0;j<${subArray}.length;j++) { if (${sourceField}.contains(${subArray}[j])) { ${sourceField}.remove(${sourceField}.indexOf(${subArray}[j])); } } ${sourceField}.addAll(${newArray}); `;
+      })
+      .join(' ');
+
+    return {
+      lang: 'painless',
+      source,
+      params: {
+        subArrays: fieldsReplacements.map(i => i.subArray),
+        newArrays: fieldsReplacements.map(i => i.newArray)
+      }
+    };
+  },
+
+  increment(fieldsMap: Record<string, unknown> = {}): PainlessScript {
     const source = Object.keys(fieldsMap)
       .map(key => `ctx._source.${key} += params._inc.${key};`)
       .join(' ');
@@ -67,7 +94,7 @@ const main = {
     };
   },
 
-  decrement(fieldsMap: object = {}): PainlessScript {
+  decrement(fieldsMap: Record<string, unknown> = {}): PainlessScript {
     const source = Object.keys(fieldsMap)
       .map(key => `ctx._source.${key} -= params._dec.${key};`)
       .join(' ');
@@ -79,7 +106,7 @@ const main = {
     };
   },
 
-  multiply(fieldsMap: object = {}): PainlessScript {
+  multiply(fieldsMap: Record<string, unknown> = {}): PainlessScript {
     const source = Object.keys(fieldsMap)
       .map(key => `ctx._source.${key} *= params._mul.${key};`)
       .join(' ');
@@ -91,7 +118,7 @@ const main = {
     };
   },
 
-  divide(fieldsMap: object = {}): PainlessScript {
+  divide(fieldsMap: Record<string, unknown> = {}): PainlessScript {
     const source = Object.keys(fieldsMap)
       .map(key => `ctx._source.${key} /= params._div.${key};`)
       .join(' ');
