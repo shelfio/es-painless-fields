@@ -39,7 +39,6 @@
       "post-commit": "git update-index --again"
     }
   },
-  "prettier": "@shelf/prettier-config",
   "lint-staged": {
     "*.{html,json,md,yml}": [
       "prettier --write --ignore-path=./.eslintignore",
@@ -50,6 +49,7 @@
       "git add"
     ]
   },
+  "prettier": "@shelf/prettier-config",
   "jest": {
     "testEnvironment": "node"
   },

@@ -68,7 +68,14 @@ const main = {
         const subArray = `params.subArrays[${i}]`;
         const newArray = `params.newArrays[${i}]`;
 
-        return `for (int j=0;j<${subArray}.length;j++) { if (${sourceField}.contains(${subArray}[j])) { ${sourceField}.remove(${sourceField}.indexOf(${subArray}[j])); } } ${sourceField}.addAll(${newArray}); `;
+        return convertMultilineScriptToInline(`
+                for (int j=0;j<${subArray}.length;j++) {
+                  if (${sourceField}.contains(${subArray}[j])) {
+                      ${sourceField}.remove(${sourceField}.indexOf(${subArray}[j]));
+                  }
+                }
+
+                ${sourceField}.addAll(${newArray}); `);
       })
       .join(' ');
 
@@ -78,6 +85,35 @@ const main = {
       params: {
         subArrays: fieldsReplacements.map(i => i.subArray),
         newArrays: fieldsReplacements.map(i => i.newArray),
+      },
+    };
+  },
+
+  removeFromArray(
+    fieldsReplacements: {
+      field: string;
+      itemsToRemove: string[];
+    }[] = []
+  ): PainlessScript {
+    const source = fieldsReplacements
+      .map((replaceRule, i) => {
+        const sourceField = `ctx._source.${replaceRule.field}`;
+        const itemsToRemove = `params.itemsToRemoveArrays[${i}]`;
+
+        return convertMultilineScriptToInline(`
+                for (int j=0;j<${itemsToRemove}.length;j++) {
+                  if (${sourceField}.contains(${itemsToRemove}[j])) {
+                      ${sourceField}.remove(${sourceField}.indexOf(${itemsToRemove}[j]));
+                  }
+                }`);
+      })
+      .join(' ');
+
+    return {
+      lang: 'painless',
+      source,
+      params: {
+        itemsToRemoveArrays: fieldsReplacements.map(i => i.itemsToRemove),
       },
     };
   },
@@ -130,6 +166,10 @@ const main = {
     };
   },
 };
+
+function convertMultilineScriptToInline(script: string): string {
+  return script.replace(/\n\s{1,}/g, ' ').trim();
+}
 
 export default main;
 module.exports = main;
