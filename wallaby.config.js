@@ -7,11 +7,11 @@ module.exports = wallaby => {
     tests: ['src/**/*.test.ts'],
     env: {
       type: 'node',
-      runner: 'node'
+      runner: 'node',
     },
     compilers: {
       'src/**/*.js': wallaby.compilers.babel(),
-      '**/*.ts?(x)': wallaby.compilers.typeScript()
+      '**/*.ts?(x)': wallaby.compilers.typeScript(),
     },
     setup(wallaby) {
       wallaby.testFramework.configure(require('./package.json').jest);
@@ -23,8 +23,8 @@ module.exports = wallaby => {
         require('@babel/core').transform(file.content, {
           sourceMap: true,
           compact: false,
-          filename: file.path
-        })
-    }
+          filename: file.path,
+        }),
+    },
   };
 };

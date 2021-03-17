@@ -12,14 +12,14 @@ describe('#set', () => {
     expect(result).toEqual({
       lang: 'painless',
       source: '',
-      params: {}
+      params: {},
     });
   });
 
   it('should return a script to set 2 simple fields', () => {
     const fieldsMap = {
       a: 1,
-      b: 2
+      b: 2,
     };
     const result = m.set(fieldsMap);
 
@@ -28,14 +28,14 @@ describe('#set', () => {
       source: 'ctx._source.a = params.a; ctx._source.b = params.b;',
       params: {
         a: 1,
-        b: 2
-      }
+        b: 2,
+      },
     });
   });
 
   it('should unflatten flat nested objects from params', () => {
     const fieldsMap = {
-      'a.b.c': 1
+      'a.b.c': 1,
     };
     const result = m.set(fieldsMap);
 
@@ -45,10 +45,10 @@ describe('#set', () => {
       params: {
         a: {
           b: {
-            c: 1
-          }
-        }
-      }
+            c: 1,
+          },
+        },
+      },
     });
   });
 });
@@ -63,7 +63,7 @@ describe('#unset', () => {
 
     expect(result).toEqual({
       lang: 'painless',
-      source: ''
+      source: '',
     });
   });
 
@@ -72,7 +72,7 @@ describe('#unset', () => {
 
     expect(result).toEqual({
       lang: 'painless',
-      source: `ctx._source.remove('a'); ctx._source.remove('b')`
+      source: `ctx._source.remove('a'); ctx._source.remove('b')`,
     });
   });
 
@@ -81,7 +81,7 @@ describe('#unset', () => {
 
     expect(result).toEqual({
       lang: 'painless',
-      source: `ctx._source.remove('a.b.c')`
+      source: `ctx._source.remove('a.b.c')`,
     });
   });
 });
@@ -100,15 +100,15 @@ describe('#replace', () => {
       source: '',
       params: {
         patterns: [],
-        substrings: []
-      }
+        substrings: [],
+      },
     });
   });
 
   it('should return a script to replace 2 fields by pattern', () => {
     const fieldsReplacements = [
       {field: 'a', pattern: 'foo', substring: 'bar'},
-      {field: 'b', pattern: 'hello', substring: 'world'}
+      {field: 'b', pattern: 'hello', substring: 'world'},
     ];
     const result = m.replace(fieldsReplacements);
 
@@ -118,8 +118,8 @@ describe('#replace', () => {
         'ctx._source.a = ctx._source.a.replace(params.patterns[0], params.substrings[0]); ctx._source.b = ctx._source.b.replace(params.patterns[1], params.substrings[1]);',
       params: {
         patterns: ['foo', 'hello'],
-        substrings: ['bar', 'world']
-      }
+        substrings: ['bar', 'world'],
+      },
     });
   });
 });
@@ -138,15 +138,15 @@ describe('#replaceSubArray', () => {
       source: '',
       params: {
         subArrays: [],
-        newArrays: []
-      }
+        newArrays: [],
+      },
     });
   });
 
   it('should return a script to replaceSubArray in 2 fields by old subArray with newArray', () => {
     const fieldsReplacements = [
       {field: 'a', subArray: ['1', '2'], newArray: ['10', '20']},
-      {field: 'b', subArray: ['3', '4'], newArray: ['30', '40']}
+      {field: 'b', subArray: ['3', '4'], newArray: ['30', '40']},
     ];
     const result = m.replaceSubArray(fieldsReplacements);
 
@@ -155,15 +155,15 @@ describe('#replaceSubArray', () => {
       params: {
         newArrays: [
           ['10', '20'],
-          ['30', '40']
+          ['30', '40'],
         ],
         subArrays: [
           ['1', '2'],
-          ['3', '4']
-        ]
+          ['3', '4'],
+        ],
       },
       source:
-        'for (int j=0;j<params.subArrays[0].length;j++) { if (ctx._source.a.contains(params.subArrays[0][j])) { ctx._source.a.remove(ctx._source.a.indexOf(params.subArrays[0][j])); } } ctx._source.a.addAll(params.newArrays[0]);  for (int j=0;j<params.subArrays[1].length;j++) { if (ctx._source.b.contains(params.subArrays[1][j])) { ctx._source.b.remove(ctx._source.b.indexOf(params.subArrays[1][j])); } } ctx._source.b.addAll(params.newArrays[1]); '
+        'for (int j=0;j<params.subArrays[0].length;j++) { if (ctx._source.a.contains(params.subArrays[0][j])) { ctx._source.a.remove(ctx._source.a.indexOf(params.subArrays[0][j])); } } ctx._source.a.addAll(params.newArrays[0]);  for (int j=0;j<params.subArrays[1].length;j++) { if (ctx._source.b.contains(params.subArrays[1][j])) { ctx._source.b.remove(ctx._source.b.indexOf(params.subArrays[1][j])); } } ctx._source.b.addAll(params.newArrays[1]); ',
     });
   });
 });
@@ -180,14 +180,14 @@ describe('#increment', () => {
     expect(result).toEqual({
       lang: 'painless',
       source: '',
-      params: {}
+      params: {},
     });
   });
 
   it('should return a script to increment 2 simple fields', () => {
     const fieldsMap = {
       a: 1,
-      b: 2
+      b: 2,
     };
     const result = m.increment(fieldsMap);
 
@@ -197,15 +197,15 @@ describe('#increment', () => {
       params: {
         _inc: {
           a: 1,
-          b: 2
-        }
-      }
+          b: 2,
+        },
+      },
     });
   });
 
   it('should unflatten flat nested objects from params', () => {
     const fieldsMap = {
-      'a.b.c': 1
+      'a.b.c': 1,
     };
     const result = m.increment(fieldsMap);
 
@@ -216,11 +216,11 @@ describe('#increment', () => {
         _inc: {
           a: {
             b: {
-              c: 1
-            }
-          }
-        }
-      }
+              c: 1,
+            },
+          },
+        },
+      },
     });
   });
 });
@@ -237,14 +237,14 @@ describe('#decrement', () => {
     expect(result).toEqual({
       lang: 'painless',
       source: '',
-      params: {}
+      params: {},
     });
   });
 
   it('should return a script to decrement 2 simple fields', () => {
     const fieldsMap = {
       a: 1,
-      b: 2
+      b: 2,
     };
     const result = m.decrement(fieldsMap);
 
@@ -254,15 +254,15 @@ describe('#decrement', () => {
       params: {
         _dec: {
           a: 1,
-          b: 2
-        }
-      }
+          b: 2,
+        },
+      },
     });
   });
 
   it('should unflatten flat nested objects from params', () => {
     const fieldsMap = {
-      'a.b.c': 1
+      'a.b.c': 1,
     };
     const result = m.decrement(fieldsMap);
 
@@ -273,11 +273,11 @@ describe('#decrement', () => {
         _dec: {
           a: {
             b: {
-              c: 1
-            }
-          }
-        }
-      }
+              c: 1,
+            },
+          },
+        },
+      },
     });
   });
 });
@@ -294,14 +294,14 @@ describe('#multiply', () => {
     expect(result).toEqual({
       lang: 'painless',
       source: '',
-      params: {}
+      params: {},
     });
   });
 
   it('should return a script to multiply 2 simple fields', () => {
     const fieldsMap = {
       a: 1,
-      b: 2
+      b: 2,
     };
     const result = m.multiply(fieldsMap);
 
@@ -311,15 +311,15 @@ describe('#multiply', () => {
       params: {
         _mul: {
           a: 1,
-          b: 2
-        }
-      }
+          b: 2,
+        },
+      },
     });
   });
 
   it('should unflatten flat nested objects from params', () => {
     const fieldsMap = {
-      'a.b.c': 1
+      'a.b.c': 1,
     };
     const result = m.multiply(fieldsMap);
 
@@ -330,11 +330,11 @@ describe('#multiply', () => {
         _mul: {
           a: {
             b: {
-              c: 1
-            }
-          }
-        }
-      }
+              c: 1,
+            },
+          },
+        },
+      },
     });
   });
 });
@@ -351,14 +351,14 @@ describe('#divide', () => {
     expect(result).toEqual({
       lang: 'painless',
       source: '',
-      params: {}
+      params: {},
     });
   });
 
   it('should return a script to divide 2 simple fields', () => {
     const fieldsMap = {
       a: 1,
-      b: 2
+      b: 2,
     };
     const result = m.divide(fieldsMap);
 
@@ -368,15 +368,15 @@ describe('#divide', () => {
       params: {
         _div: {
           a: 1,
-          b: 2
-        }
-      }
+          b: 2,
+        },
+      },
     });
   });
 
   it('should unflatten flat nested objects from params', () => {
     const fieldsMap = {
-      'a.b.c': 1
+      'a.b.c': 1,
     };
     const result = m.divide(fieldsMap);
 
@@ -387,11 +387,11 @@ describe('#divide', () => {
         _div: {
           a: {
             b: {
-              c: 1
-            }
-          }
-        }
-      }
+              c: 1,
+            },
+          },
+        },
+      },
     });
   });
 });

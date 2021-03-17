@@ -15,7 +15,7 @@ const main = {
     return {
       lang: 'painless',
       source,
-      params: unflatten(fieldsMap)
+      params: unflatten(fieldsMap),
     };
   },
 
@@ -24,7 +24,7 @@ const main = {
 
     return {
       lang: 'painless',
-      source
+      source,
     };
   },
 
@@ -50,8 +50,8 @@ const main = {
       source,
       params: {
         patterns: fieldsReplacements.map(i => i.pattern),
-        substrings: fieldsReplacements.map(i => i.substring)
-      }
+        substrings: fieldsReplacements.map(i => i.substring),
+      },
     };
   },
 
@@ -77,8 +77,8 @@ const main = {
       source,
       params: {
         subArrays: fieldsReplacements.map(i => i.subArray),
-        newArrays: fieldsReplacements.map(i => i.newArray)
-      }
+        newArrays: fieldsReplacements.map(i => i.newArray),
+      },
     };
   },
 
@@ -90,7 +90,7 @@ const main = {
     return {
       lang: 'painless',
       source,
-      params: source ? {_inc: unflatten(fieldsMap)} : {}
+      params: source ? {_inc: unflatten(fieldsMap)} : {},
     };
   },
 
@@ -102,7 +102,7 @@ const main = {
     return {
       lang: 'painless',
       source,
-      params: source ? {_dec: unflatten(fieldsMap)} : {}
+      params: source ? {_dec: unflatten(fieldsMap)} : {},
     };
   },
 
@@ -114,7 +114,7 @@ const main = {
     return {
       lang: 'painless',
       source,
-      params: source ? {_mul: unflatten(fieldsMap)} : {}
+      params: source ? {_mul: unflatten(fieldsMap)} : {},
     };
   },
 
@@ -126,9 +126,9 @@ const main = {
     return {
       lang: 'painless',
       source,
-      params: source ? {_div: unflatten(fieldsMap)} : {}
+      params: source ? {_div: unflatten(fieldsMap)} : {},
     };
-  }
+  },
 };
 
 export default main;

@@ -17,11 +17,11 @@
     "email": "vlad@shelf.io",
     "url": "shelf.io"
   },
-  "main": "lib",
-  "types": "lib/index.d.ts",
   "files": [
     "lib"
   ],
+  "main": "lib",
+  "types": "lib/index.d.ts",
   "scripts": {
     "build": "rm -rf lib/ && yarn build:types && babel src --out-dir lib --ignore '**/*.test.ts' --extensions '.ts'",
     "build:types": "tsc --emitDeclarationOnly --declaration --isolatedModules false --declarationDir lib",
@@ -39,6 +39,7 @@
       "post-commit": "git update-index --again"
     }
   },
+  "prettier": "@shelf/prettier-config",
   "lint-staged": {
     "*.{html,json,md,yml}": [
       "prettier --write --ignore-path=./.eslintignore",
@@ -56,20 +57,21 @@
     "flat": "5.0.0"
   },
   "devDependencies": {
-    "@babel/cli": "7.8.4",
-    "@babel/core": "7.8.4",
-    "@babel/preset-env": "7.8.7",
-    "@babel/preset-typescript": "7.8.3",
-    "@shelf/eslint-config": "0.19.0",
+    "@babel/cli": "7.13.10",
+    "@babel/core": "7.13.10",
+    "@babel/preset-env": "7.13.10",
+    "@babel/preset-typescript": "7.13.0",
+    "@shelf/eslint-config": "1.0.0",
+    "@shelf/prettier-config": "1.0.0",
     "@types/flat": "0.0.28",
-    "@types/jest": "26.0.9",
+    "@types/jest": "26.0.21",
     "@types/node": "12",
-    "eslint": "6.8.0",
+    "eslint": "7.22.0",
     "husky": "4.2.5",
-    "jest": "26.2.2",
-    "lint-staged": "10.2.11",
-    "prettier": "1.19.1",
-    "typescript": "3.7.5"
+    "jest": "26.6.3",
+    "lint-staged": "10.5.4",
+    "prettier": "2.2.1",
+    "typescript": "4.2.3"
   },
   "engines": {
     "node": ">=12"
