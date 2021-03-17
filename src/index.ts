@@ -89,6 +89,35 @@ const main = {
     };
   },
 
+  removeFromArray(
+    fieldsReplacements: {
+      field: string;
+      subArray: string[];
+    }[] = []
+  ): PainlessScript {
+    const source = fieldsReplacements
+      .map((replaceRule, i) => {
+        const sourceField = `ctx._source.${replaceRule.field}`;
+        const subArray = `params.subArrays[${i}]`;
+
+        return convertMultilineScriptToInline(`
+                for (int j=0;j<${subArray}.length;j++) {
+                  if (${sourceField}.contains(${subArray}[j])) {
+                      ${sourceField}.remove(${sourceField}.indexOf(${subArray}[j]));
+                  }
+                }`);
+      })
+      .join(' ');
+
+    return {
+      lang: 'painless',
+      source,
+      params: {
+        subArrays: fieldsReplacements.map(i => i.subArray),
+      },
+    };
+  },
+
   increment(fieldsMap: Record<string, unknown> = {}): PainlessScript {
     const source = Object.keys(fieldsMap)
       .map(key => `ctx._source.${key} += params._inc.${key};`)

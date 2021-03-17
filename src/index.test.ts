@@ -168,6 +168,45 @@ describe('#replaceSubArray', () => {
   });
 });
 
+describe('#removeFromArray', () => {
+  it('should export a removeFromArray function', () => {
+    expect(m.removeFromArray).toBeInstanceOf(Function);
+  });
+
+  it('should handle empty input', () => {
+    const fieldsReplacements = [];
+    const result = m.removeFromArray(fieldsReplacements);
+
+    expect(result).toEqual({
+      lang: 'painless',
+      source: '',
+      params: {
+        subArrays: [],
+      },
+    });
+  });
+
+  it('should return a script to removeFromArray in 2 fields by old subArray', () => {
+    const fieldsReplacements = [
+      {field: 'a', subArray: ['1', '2']},
+      {field: 'b', subArray: ['3', '4']},
+    ];
+    const result = m.removeFromArray(fieldsReplacements);
+
+    expect(result).toEqual({
+      lang: 'painless',
+      params: {
+        subArrays: [
+          ['1', '2'],
+          ['3', '4'],
+        ],
+      },
+      source:
+        'for (int j=0;j<params.subArrays[0].length;j++) { if (ctx._source.a.contains(params.subArrays[0][j])) { ctx._source.a.remove(ctx._source.a.indexOf(params.subArrays[0][j])); } } for (int j=0;j<params.subArrays[1].length;j++) { if (ctx._source.b.contains(params.subArrays[1][j])) { ctx._source.b.remove(ctx._source.b.indexOf(params.subArrays[1][j])); } }',
+    });
+  });
+});
+
 describe('#increment', () => {
   it('should export a increment function', () => {
     expect(m.increment).toBeInstanceOf(Function);
