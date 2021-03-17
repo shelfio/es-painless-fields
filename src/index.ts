@@ -68,13 +68,14 @@ const main = {
         const subArray = `params.subArrays[${i}]`;
         const newArray = `params.newArrays[${i}]`;
 
-        return `for (int j=0;j<${subArray}.length;j++) {
+        return convertMultilineScriptToInline(`
+                for (int j=0;j<${subArray}.length;j++) {
                   if (${sourceField}.contains(${subArray}[j])) {
                       ${sourceField}.remove(${sourceField}.indexOf(${subArray}[j]));
                   }
                 }
 
-                ${sourceField}.addAll(${newArray}); `.replace(/\n\s{2,}/g, ' ');
+                ${sourceField}.addAll(${newArray}); `);
       })
       .join(' ');
 
@@ -136,6 +137,10 @@ const main = {
     };
   },
 };
+
+function convertMultilineScriptToInline(script: string): string {
+  return script.replace(/\n\s{1,}/g, ' ').trim();
+}
 
 export default main;
 module.exports = main;
