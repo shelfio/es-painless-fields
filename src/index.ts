@@ -68,7 +68,13 @@ const main = {
         const subArray = `params.subArrays[${i}]`;
         const newArray = `params.newArrays[${i}]`;
 
-        return `for (int j=0;j<${subArray}.length;j++) { if (${sourceField}.contains(${subArray}[j])) { ${sourceField}.remove(${sourceField}.indexOf(${subArray}[j])); } } ${sourceField}.addAll(${newArray}); `;
+        return `for (int j=0;j<${subArray}.length;j++) {
+                  if (${sourceField}.contains(${subArray}[j])) {
+                      ${sourceField}.remove(${sourceField}.indexOf(${subArray}[j]));
+                  }
+                }
+
+                ${sourceField}.addAll(${newArray}); `.replace(/\n\s{2,}/g, ' ');
       })
       .join(' ');
 
