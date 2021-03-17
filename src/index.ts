@@ -92,18 +92,18 @@ const main = {
   removeFromArray(
     fieldsReplacements: {
       field: string;
-      subArray: string[];
+      itemsToRemove: string[];
     }[] = []
   ): PainlessScript {
     const source = fieldsReplacements
       .map((replaceRule, i) => {
         const sourceField = `ctx._source.${replaceRule.field}`;
-        const subArray = `params.subArrays[${i}]`;
+        const itemsToRemove = `params.itemsToRemoveArrays[${i}]`;
 
         return convertMultilineScriptToInline(`
-                for (int j=0;j<${subArray}.length;j++) {
-                  if (${sourceField}.contains(${subArray}[j])) {
-                      ${sourceField}.remove(${sourceField}.indexOf(${subArray}[j]));
+                for (int j=0;j<${itemsToRemove}.length;j++) {
+                  if (${sourceField}.contains(${itemsToRemove}[j])) {
+                      ${sourceField}.remove(${sourceField}.indexOf(${itemsToRemove}[j]));
                   }
                 }`);
       })
@@ -113,7 +113,7 @@ const main = {
       lang: 'painless',
       source,
       params: {
-        subArrays: fieldsReplacements.map(i => i.subArray),
+        itemsToRemoveArrays: fieldsReplacements.map(i => i.itemsToRemove),
       },
     };
   },
