@@ -75,7 +75,7 @@ const main = {
                   }
                 }
 
-                ${sourceField}.addAll(${newArray}); `);
+                ${sourceField}.addAll(${newArray}); ${sourceField}.stream().distinct();`);
       })
       .join(' ');
 
