@@ -120,7 +120,15 @@ const main = {
 
   increment(fieldsMap: Record<string, unknown> = {}): PainlessScript {
     const source = Object.keys(fieldsMap)
-      .map(key => `ctx._source.${key} += params._inc.${key};`)
+      .map(key =>
+        convertMultilineScriptToInline(`
+          if (ctx._source.${key} == null) {
+            ctx._source.${key} = params._inc.${key};
+          } else {
+            ctx._source.${key} += params._inc.${key};
+          }
+      `)
+      )
       .join(' ');
 
     return {

@@ -232,13 +232,9 @@ describe('#increment', () => {
 
     expect(result).toEqual({
       lang: 'painless',
-      source: 'ctx._source.a += params._inc.a; ctx._source.b += params._inc.b;',
-      params: {
-        _inc: {
-          a: 1,
-          b: 2,
-        },
-      },
+      params: {_inc: {a: 1, b: 2}},
+      source:
+        'if (ctx._source.a == null) { ctx._source.a = params._inc.a; } else { ctx._source.a += params._inc.a; } if (ctx._source.b == null) { ctx._source.b = params._inc.b; } else { ctx._source.b += params._inc.b; }',
     });
   });
 
@@ -250,16 +246,9 @@ describe('#increment', () => {
 
     expect(result).toEqual({
       lang: 'painless',
-      source: 'ctx._source.a.b.c += params._inc.a.b.c;',
-      params: {
-        _inc: {
-          a: {
-            b: {
-              c: 1,
-            },
-          },
-        },
-      },
+      params: {_inc: {a: {b: {c: 1}}}},
+      source:
+        'if (ctx._source.a.b.c == null) { ctx._source.a.b.c = params._inc.a.b.c; } else { ctx._source.a.b.c += params._inc.a.b.c; }',
     });
   });
 });
