@@ -62,15 +62,19 @@ Array of field names which you would like to unset. Example: `['a', 'b'']`
 
 ### .increment(fieldsMap)
 
+This library will handle the case if property did not yet exist. It will set the value to the incremented count.
+
 #### fieldsMap
 
 Type: `Object`
 
 Object fields which you would like to increment. Example: `{a: 1, b: 2}`
 
-Also can be in a flat form, like `{'a.b.c': 1}`
+Also, can be in a flat form, like `{'a.b.c': 1}`
 
 ### .decrement(fieldsMap)
+
+It will fallback to setting property value to 0 if it didn't exist yet.
 
 #### fieldsMap
 
@@ -82,6 +86,8 @@ Also can be in a flat form, like `{'a.b.c': 1}`
 
 ### .multiply(fieldsMap)
 
+It will fallback to setting property value to 0 if it didn't exist yet.
+
 #### fieldsMap
 
 Type: `Object`
@@ -91,6 +97,8 @@ Object fields which you would like to multiply. Example: `{a: 1, b: 2}`
 Also can be in a flat form, like `{'a.b.c': 1}`
 
 ### .divide(fieldsMap)
+
+It will fallback to setting property value to 0 if it didn't exist yet.
 
 #### fieldsMap
 
