@@ -140,7 +140,15 @@ const main = {
 
   decrement(fieldsMap: Record<string, unknown> = {}): PainlessScript {
     const source = Object.keys(fieldsMap)
-      .map(key => `ctx._source.${key} -= params._dec.${key};`)
+      .map(key =>
+        convertMultilineScriptToInline(`
+          if (ctx._source.${key} == null) {
+            ctx._source.${key} = 0;
+          } else {
+            ctx._source.${key} -= params._dec.${key};
+          }
+      `)
+      )
       .join(' ');
 
     return {
@@ -152,7 +160,15 @@ const main = {
 
   multiply(fieldsMap: Record<string, unknown> = {}): PainlessScript {
     const source = Object.keys(fieldsMap)
-      .map(key => `ctx._source.${key} *= params._mul.${key};`)
+      .map(key =>
+        convertMultilineScriptToInline(`
+          if (ctx._source.${key} == null) {
+            ctx._source.${key} = 0;
+          } else {
+            ctx._source.${key} *= params._mul.${key};
+          }
+      `)
+      )
       .join(' ');
 
     return {
@@ -164,7 +180,15 @@ const main = {
 
   divide(fieldsMap: Record<string, unknown> = {}): PainlessScript {
     const source = Object.keys(fieldsMap)
-      .map(key => `ctx._source.${key} /= params._div.${key};`)
+      .map(key =>
+        convertMultilineScriptToInline(`
+          if (ctx._source.${key} == null) {
+            ctx._source.${key} = 0;
+          } else {
+            ctx._source.${key} /= params._div.${key};
+          }
+      `)
+      )
       .join(' ');
 
     return {

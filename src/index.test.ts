@@ -278,13 +278,9 @@ describe('#decrement', () => {
 
     expect(result).toEqual({
       lang: 'painless',
-      source: 'ctx._source.a -= params._dec.a; ctx._source.b -= params._dec.b;',
-      params: {
-        _dec: {
-          a: 1,
-          b: 2,
-        },
-      },
+      params: {_dec: {a: 1, b: 2}},
+      source:
+        'if (ctx._source.a == null) { ctx._source.a = 0; } else { ctx._source.a -= params._dec.a; } if (ctx._source.b == null) { ctx._source.b = 0; } else { ctx._source.b -= params._dec.b; }',
     });
   });
 
@@ -296,16 +292,9 @@ describe('#decrement', () => {
 
     expect(result).toEqual({
       lang: 'painless',
-      source: 'ctx._source.a.b.c -= params._dec.a.b.c;',
-      params: {
-        _dec: {
-          a: {
-            b: {
-              c: 1,
-            },
-          },
-        },
-      },
+      params: {_dec: {a: {b: {c: 1}}}},
+      source:
+        'if (ctx._source.a.b.c == null) { ctx._source.a.b.c = 0; } else { ctx._source.a.b.c -= params._dec.a.b.c; }',
     });
   });
 });
@@ -335,13 +324,9 @@ describe('#multiply', () => {
 
     expect(result).toEqual({
       lang: 'painless',
-      source: 'ctx._source.a *= params._mul.a; ctx._source.b *= params._mul.b;',
-      params: {
-        _mul: {
-          a: 1,
-          b: 2,
-        },
-      },
+      params: {_mul: {a: 1, b: 2}},
+      source:
+        'if (ctx._source.a == null) { ctx._source.a = 0; } else { ctx._source.a *= params._mul.a; } if (ctx._source.b == null) { ctx._source.b = 0; } else { ctx._source.b *= params._mul.b; }',
     });
   });
 
@@ -353,16 +338,9 @@ describe('#multiply', () => {
 
     expect(result).toEqual({
       lang: 'painless',
-      source: 'ctx._source.a.b.c *= params._mul.a.b.c;',
-      params: {
-        _mul: {
-          a: {
-            b: {
-              c: 1,
-            },
-          },
-        },
-      },
+      params: {_mul: {a: {b: {c: 1}}}},
+      source:
+        'if (ctx._source.a.b.c == null) { ctx._source.a.b.c = 0; } else { ctx._source.a.b.c *= params._mul.a.b.c; }',
     });
   });
 });
@@ -392,13 +370,9 @@ describe('#divide', () => {
 
     expect(result).toEqual({
       lang: 'painless',
-      source: 'ctx._source.a /= params._div.a; ctx._source.b /= params._div.b;',
-      params: {
-        _div: {
-          a: 1,
-          b: 2,
-        },
-      },
+      params: {_div: {a: 1, b: 2}},
+      source:
+        'if (ctx._source.a == null) { ctx._source.a = 0; } else { ctx._source.a /= params._div.a; } if (ctx._source.b == null) { ctx._source.b = 0; } else { ctx._source.b /= params._div.b; }',
     });
   });
 
@@ -410,16 +384,9 @@ describe('#divide', () => {
 
     expect(result).toEqual({
       lang: 'painless',
-      source: 'ctx._source.a.b.c /= params._div.a.b.c;',
-      params: {
-        _div: {
-          a: {
-            b: {
-              c: 1,
-            },
-          },
-        },
-      },
+      params: {_div: {a: {b: {c: 1}}}},
+      source:
+        'if (ctx._source.a.b.c == null) { ctx._source.a.b.c = 0; } else { ctx._source.a.b.c /= params._div.a.b.c; }',
     });
   });
 });
