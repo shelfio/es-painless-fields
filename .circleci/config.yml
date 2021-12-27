@@ -18,10 +18,11 @@ jobs:
   build:
     executor:
       name: node/default
-      tag: '12'
+      tag: '14-browsers'
     steps:
       - checkout
       - install_deps
       - run: yarn test
+      - run: yarn test:es
       - run: yarn type-check
       - run: yarn lint:ci

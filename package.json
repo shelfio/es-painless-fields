@@ -25,11 +25,12 @@
   "scripts": {
     "build": "rm -rf lib/ && yarn build:types && babel src --out-dir lib --ignore '**/*.test.ts' --extensions '.ts'",
     "build:types": "tsc --emitDeclarationOnly --declaration --isolatedModules false --declarationDir lib",
-    "coverage": "jest --coverage",
+    "coverage": "yarn test --coverage",
     "lint": "eslint . --ext .js,.ts,.json --fix --quiet",
     "lint:ci": "eslint . --ext .js,.ts,.json --quiet",
     "prepack": "yarn build",
-    "test": "jest src",
+    "test": "TZ=UTC jest src -c jest.config.unit.js",
+    "test:es": "DEBUG=elasticsearch-local TZ=UTC jest src -c jest.config.js --forceExit",
     "type-check": "tsc --noEmit",
     "type-check:watch": "npm run type-check -- --watch"
   },
@@ -50,9 +51,6 @@
     ]
   },
   "prettier": "@shelf/prettier-config",
-  "jest": {
-    "testEnvironment": "node"
-  },
   "dependencies": {
     "flat": "5.0.0"
   },
@@ -61,7 +59,9 @@
     "@babel/core": "7.13.10",
     "@babel/preset-env": "7.13.10",
     "@babel/preset-typescript": "7.13.0",
+    "@elastic/elasticsearch": "7.16.0",
     "@shelf/eslint-config": "1.0.0",
+    "@shelf/jest-elasticsearch": "2.1.0",
     "@shelf/prettier-config": "1.0.0",
     "@types/flat": "0.0.28",
     "@types/jest": "26.0.21",
