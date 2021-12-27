@@ -56,9 +56,3 @@ it('should increment views count in ES if property did not exist', async () => {
 
   expect(updatedDoc.body._source).toEqual({name: 'text.txt', viewsCount: 1});
 });
-
-async function waitFor(ms: number): Promise<void> {
-  return new Promise(resolve => {
-    setTimeout(resolve, ms);
-  });
-}

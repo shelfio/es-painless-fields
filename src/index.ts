@@ -1,10 +1,10 @@
 import {unflatten} from 'flat';
 
-interface PainlessScript {
+type PainlessScript = {
   lang: 'painless';
   source: string;
   params?: Record<string, unknown>;
-}
+};
 
 const main = {
   set(fieldsMap: Record<string, unknown> = {}): PainlessScript {

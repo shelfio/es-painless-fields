@@ -1,3 +1,4 @@
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const babel = require('@shelf/babel-config/backend');
 
 module.exports = wallaby => {
