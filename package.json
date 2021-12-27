@@ -34,21 +34,16 @@
     "type-check": "tsc --noEmit",
     "type-check:watch": "npm run type-check -- --watch"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged",
-      "post-commit": "git update-index --again"
-    }
-  },
   "lint-staged": {
     "*.{html,json,md,yml}": [
-      "prettier --write --ignore-path=./.eslintignore",
-      "git add"
+      "prettier --write --ignore-path=./.eslintignore"
     ],
     "*.{ts,js}": [
-      "eslint --fix",
-      "git add"
+      "eslint --fix"
     ]
+  },
+  "babel": {
+    "extends": "@shelf/babel-config/backend"
   },
   "prettier": "@shelf/prettier-config",
   "dependencies": {
@@ -68,14 +63,14 @@
     "@types/jest": "26.0.21",
     "@types/node": "12",
     "eslint": "8.5.0",
-    "husky": "4.2.5",
+    "husky": "7.0.4",
     "jest": "27.4.5",
     "lint-staged": "12.1.4",
     "prettier": "2.5.1",
     "typescript": "4.5.4"
   },
   "engines": {
-    "node": ">=12"
+    "node": ">=14"
   },
   "publishConfig": {
     "access": "public"
