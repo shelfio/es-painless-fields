@@ -60,6 +60,7 @@
     "@babel/preset-env": "7.13.10",
     "@babel/preset-typescript": "7.13.0",
     "@elastic/elasticsearch": "7.16.0",
+    "@shelf/babel-config": "0.1.5",
     "@shelf/eslint-config": "1.0.0",
     "@shelf/jest-elasticsearch": "2.1.0",
     "@shelf/prettier-config": "1.0.0",
