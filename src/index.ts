@@ -101,8 +101,9 @@ const main = {
       def target = ${sourceField}.find(fieldInArray -> fieldInArray.${targetElement.fieldName} == ${targetElement.fieldValue});
       if (target != null) {
         for (key in params.fieldsToUpdateInTarget.keySet()) {
-          if (target[key] != null) {
-            target[key] = params.fieldsToUpdateInTarget[key];
+          def value = params.fieldsToUpdateInTarget[key];
+          if (target[key] != null && target[key] != value) {
+            target[key] = value;
           }
         }
       }
