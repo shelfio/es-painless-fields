@@ -170,20 +170,26 @@ describe('#replaceSubArray', () => {
 
 describe('#updateFieldInArray', () => {
   it('should export updateFieldInArray function', () => {
-    expect(m.updateFieldInArray).toBeInstanceOf(Function);
+    expect(m.updateFieldArrayElement).toBeInstanceOf(Function);
   });
 
   it('should return a script to update field in array', () => {
-    const result = m.updateFieldInArray({
+    const result = m.updateFieldArrayElement({
       arrayField: 'fields',
-      targetFieldInArray: {attribute: 'key', value: 'key-value-1'},
-      updateFieldInTarget: {attribute: 'is_searchable', value: true},
+      targetElement: {fieldName: 'key', fieldValue: 'key-value-1'},
+      fieldsToUpdateInTarget: {is_searchable: true, key: 'key-value-2'},
     });
 
     expect(result).toEqual({
       lang: 'painless',
+      params: {
+        fieldsToUpdateInTarget: {
+          is_searchable: true,
+          key: 'key-value-2',
+        },
+      },
       source:
-        'def target = ctx._source.fields.find(fieldInArray -> fieldInArray.key == key-value-1); if (target != null) { target.is_searchable = true; }',
+        'def target = ctx._source.fields.find(fieldInArray -> fieldInArray.key == key-value-1); if (target != null) { for (key in params.fieldsToUpdateInTarget.keySet()) { if (target[key] != null) { target[key] = params.fieldsToUpdateInTarget[key]; } } }',
     });
   });
 });
