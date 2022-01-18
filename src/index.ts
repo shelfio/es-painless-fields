@@ -89,6 +89,26 @@ const main = {
     };
   },
 
+  updateFieldInArray(fieldInArrayUpdate: {
+    arrayField: string;
+    targetFieldInArray: {attribute: string; value: unknown};
+    updateFieldInTarget: {attribute: string; value: unknown};
+  }): PainlessScript {
+    const {arrayField, targetFieldInArray, updateFieldInTarget} = fieldInArrayUpdate;
+    const sourceField = `ctx._source.${arrayField}`;
+    const source = convertMultilineScriptToInline(`
+      def target = ${sourceField}.find(fieldInArray -> fieldInArray.${targetFieldInArray.attribute} == ${targetFieldInArray.value});
+      if (target != null) {
+          target.${updateFieldInTarget.attribute} = ${updateFieldInTarget.value};
+      }
+    `);
+
+    return {
+      lang: 'painless',
+      source,
+    };
+  },
+
   removeFromArray(
     fieldsReplacements: {
       field: string;

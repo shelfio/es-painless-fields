@@ -168,6 +168,26 @@ describe('#replaceSubArray', () => {
   });
 });
 
+describe('#updateFieldInArray', () => {
+  it('should export updateFieldInArray function', () => {
+    expect(m.updateFieldInArray).toBeInstanceOf(Function);
+  });
+
+  it('should return a script to update field in array', () => {
+    const result = m.updateFieldInArray({
+      arrayField: 'fields',
+      targetFieldInArray: {attribute: 'key', value: 'key-value-1'},
+      updateFieldInTarget: {attribute: 'is_searchable', value: true},
+    });
+
+    expect(result).toEqual({
+      lang: 'painless',
+      source:
+        'def target = ctx._source.fields.find(fieldInArray -> fieldInArray.key == key-value-1); if (target != null) { target.is_searchable = true; }',
+    });
+  });
+});
+
 describe('#removeFromArray', () => {
   it('should export a removeFromArray function', () => {
     expect(m.removeFromArray).toBeInstanceOf(Function);
