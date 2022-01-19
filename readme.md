@@ -21,6 +21,7 @@ aims to ease partial bulk document updates.
 - In-place **decrement** values in fields
 - In-place **multiply** values in fields
 - In-place **divide** values in fields
+- In-place **updateObjectInArray** - updates object in array
 - ... to be done
 
 ## Usage
@@ -197,6 +198,38 @@ Returns a script which removes items from array. Example:
     ]
   },
   "source": "for (int j=0;j<params.itemsToRemoveArrays[0].length;j++) { if (ctx._source.a.contains(params.itemsToRemoveArrays[0][j])) { ctx._source.a.remove(ctx._source.a.indexOf(params.itemsToRemoveArrays[0][j])); } } for (int j=0;j<params.itemsToRemoveArrays[1].length;j++) { if (ctx._source.b.contains(params.itemsToRemoveArrays[1][j])) { ctx._source.b.remove(ctx._source.b.indexOf(params.itemsToRemoveArrays[1][j])); } }"
+}
+```
+//
+### .updateObjectInArray(updateObjectInArrayParams)
+
+#### updateObjectInArrayParams
+
+Type: `Object`
+
+Parameters required to update field inside array. Example:
+
+```js
+const updateObjectInArrayParams = {
+  arrayFieldName: 'actors',
+  targetObject: {fieldName: 'id', fieldValue: 'actor-id-1'},
+  fieldsToUpdate: {name: 'Leonardo DiCaprio', hasOscar: true},
+}
+```
+
+Returns a script which updates target object`s fields inside array. Example:
+
+```json
+{
+  "lang": "painless",
+  "params": {
+    "fieldsToUpdate": {
+      "name": "Leonardo DiCaprio",
+      "hasOscar": true
+    }
+  },
+  "source":
+  "def target = ctx._source.fields.find(objectInArray -> objectInArray.key == key-value-1); if (target != null) { for (key in params.fieldsToUpdate.keySet()) { def value = params.fieldsToUpdate[key]; if (target[key] != null && target[key] != value) { target[key] = value; } } }"
 }
 ```
 
