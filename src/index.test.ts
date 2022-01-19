@@ -175,21 +175,21 @@ describe('#updateFieldInArray', () => {
 
   it('should return a script to update field in array', () => {
     const result = m.updateFieldArrayElement({
-      arrayField: 'fields',
+      arrayFieldName: 'fields',
       targetElement: {fieldName: 'key', fieldValue: 'key-value-1'},
-      fieldsToUpdateInTarget: {is_searchable: true, key: 'key-value-2'},
+      fieldsToUpdate: {is_searchable: true, key: 'key-value-2'},
     });
 
     expect(result).toEqual({
       lang: 'painless',
       params: {
-        fieldsToUpdateInTarget: {
+        fieldsToUpdate: {
           is_searchable: true,
           key: 'key-value-2',
         },
       },
       source:
-        'def target = ctx._source.fields.find(fieldInArray -> fieldInArray.key == key-value-1); if (target != null) { for (key in params.fieldsToUpdateInTarget.keySet()) { def value = params.fieldsToUpdateInTarget[key]; if (target[key] != null && target[key] != value) { target[key] = value; } } }',
+        'def target = ctx._source.fields.find(fieldInArray -> fieldInArray.key == key-value-1); if (target != null) { for (key in params.fieldsToUpdate.keySet()) { def value = params.fieldsToUpdate[key]; if (target[key] != null && target[key] != value) { target[key] = value; } } }',
     });
   });
 });

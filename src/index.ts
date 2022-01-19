@@ -90,18 +90,18 @@ const main = {
   },
 
   updateFieldArrayElement(updateFieldArrayElementParams: {
-    arrayField: string;
+    arrayFieldName: string;
     targetElement: {fieldName: string; fieldValue: unknown};
-    fieldsToUpdateInTarget: Record<string, unknown>;
+    fieldsToUpdate: Record<string, unknown>;
   }): PainlessScript {
-    const {arrayField, targetElement, fieldsToUpdateInTarget} = updateFieldArrayElementParams;
-    const sourceField = `ctx._source.${arrayField}`;
+    const {arrayFieldName, targetElement, fieldsToUpdate} = updateFieldArrayElementParams;
+    const sourceField = `ctx._source.${arrayFieldName}`;
 
     const source = convertMultilineScriptToInline(`
       def target = ${sourceField}.find(fieldInArray -> fieldInArray.${targetElement.fieldName} == ${targetElement.fieldValue});
       if (target != null) {
-        for (key in params.fieldsToUpdateInTarget.keySet()) {
-          def value = params.fieldsToUpdateInTarget[key];
+        for (key in params.fieldsToUpdate.keySet()) {
+          def value = params.fieldsToUpdate[key];
           if (target[key] != null && target[key] != value) {
             target[key] = value;
           }
@@ -113,7 +113,7 @@ const main = {
       lang: 'painless',
       source,
       params: {
-        fieldsToUpdateInTarget,
+        fieldsToUpdate,
       },
     };
   },
