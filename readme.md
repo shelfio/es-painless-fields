@@ -207,7 +207,7 @@ Returns a script which removes items from array. Example:
 
 Type: `Object`
 
-Parameters required to update field inside array. Example:
+Parameters required to update object's fields in array. Example:
 
 ```js
 const updateObjectInArrayParams = {
@@ -217,7 +217,7 @@ const updateObjectInArrayParams = {
 }
 ```
 
-Returns a script which updates target object`s fields inside array. Example:
+Returns a script which updates target object's fields in array. Example:
 
 ```json
 {
