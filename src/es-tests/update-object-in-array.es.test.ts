@@ -91,7 +91,7 @@ describe('#updateObjectInArray', () => {
   it('should not update object in array if object does not exist in array', async () => {
     await client.create({
       index: 'files-alias',
-      id: 'some-file-23',
+      id: 'some-file-22',
       body: {
         name: 'Wolf from wall street',
         actors: [
@@ -111,6 +111,51 @@ describe('#updateObjectInArray', () => {
 
     await client.update({
       index: 'files-alias',
+      id: 'some-file-22',
+      body: {
+        script: painlessScript,
+      },
+      refresh: true,
+    });
+
+    const updatedDoc = await client.get({
+      index: 'files-alias',
+      id: 'some-file-22',
+    });
+
+    expect(updatedDoc.body._source).toEqual({
+      actors: [
+        {
+          id: 'actor-id-2',
+        },
+      ],
+      name: 'Wolf from wall street',
+    });
+  });
+
+  it('should update object in array if it exists and has fields to update and arrayFieldName is nested', async () => {
+    await client.create({
+      index: 'files-alias',
+      id: 'some-file-23',
+      body: {
+        name: 'Wolf from wall street',
+        data: {
+          film: {
+            actors: [{id: 'actor-id-1', name: 'Leonardo Dicaprio', hasOscar: false}],
+          },
+        },
+      },
+      refresh: true,
+    });
+
+    const painlessScript = painlessFields.updateObjectInArray({
+      arrayFieldName: 'data.film.actors',
+      targetObject: {fieldName: 'id', fieldValue: 'actor-id-1'},
+      fieldsToUpdate: {name: 'Leonardo DiCaprio', hasOscar: true},
+    });
+
+    await client.update({
+      index: 'files-alias',
       id: 'some-file-23',
       body: {
         script: painlessScript,
@@ -124,11 +169,17 @@ describe('#updateObjectInArray', () => {
     });
 
     expect(updatedDoc.body._source).toEqual({
-      actors: [
-        {
-          id: 'actor-id-2',
+      data: {
+        film: {
+          actors: [
+            {
+              hasOscar: true,
+              id: 'actor-id-1',
+              name: 'Leonardo DiCaprio',
+            },
+          ],
         },
-      ],
+      },
       name: 'Wolf from wall street',
     });
   });

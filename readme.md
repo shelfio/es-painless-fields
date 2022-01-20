@@ -208,6 +208,8 @@ Returns a script which removes items from array. Example:
 
 Type: `Object`
 
+arrayFieldName can be nested: 'data.film.actors'
+
 Parameters required to update object's fields in array. Example:
 
 ```js
@@ -224,7 +226,6 @@ Returns a script which updates target object's fields in array. Example:
 {
   "lang": "painless",
   "params": {
-    "arrayFieldName": "actors",
     "fieldsToUpdate": {
       "name": "Leonardo DiCaprio",
       "hasOscar": true
@@ -235,7 +236,7 @@ Returns a script which updates target object's fields in array. Example:
     }
   },
   "source":
-  "def target = ctx._source[params.arrayFieldName].find(objectInArray -> objectInArray[params.targetObject.fieldName] == params.targetObject.fieldValue); if (target != null) { for (key in params.fieldsToUpdate.keySet()) { def value = params.fieldsToUpdate[key]; if (target[key] != null && target[key] != value) { target[key] = value; } } }"
+  "if (ctx._source.actors != null) { def target = ctx._source.actors.find(objectInArray -> objectInArray[params.targetObject.fieldName] == params.targetObject.fieldValue); if (target != null) { for (key in params.fieldsToUpdate.keySet()) { def value = params.fieldsToUpdate[key]; if (target[key] != null && target[key] != value) { target[key] = value; } } } }"
 }
 ```
 
@@ -245,7 +246,11 @@ Returns a script which updates target object's fields in array. Example:
 
 Type: `Object`
 
-Parameters required to upsert object's fields in array. If the target object exists, its fields will be updated based on fieldsToUpsert. If the target object does not exist, new object will be inserted in array based on fieldsToUpsert. Example:
+If the target object exists, its fields will be updated based on fieldsToUpsert. If the target object does not exist, new object will be inserted in array based on fieldsToUpsert.
+
+arrayFieldName can be nested: 'data.film.actors'
+
+Parameters required to upsert object's fields in array. Example:
 
 ```js
 const upsertObjectInArrayParams = {
@@ -261,7 +266,6 @@ Returns a script which upserts target object's fields in array. Example:
 {
   "lang": "painless",
   "params": {
-    "arrayFieldName": "actors",
     "fieldsToUpsert": {
       "name": "Margot Robbie"
     },
@@ -271,7 +275,7 @@ Returns a script which upserts target object's fields in array. Example:
     }
   },
   "source":
-  "if (!ctx._source.containsKey(params.arrayFieldName)) { ctx._source[params.arrayFieldName] = []; } def target = ctx._source[params.arrayFieldName].find(objectInArray -> objectInArray[params.targetObject.fieldName] == params.targetObject.fieldValue); if (target == null) { ctx._source[params.arrayFieldName].add(params.fieldsToUpsert); } else { for (key in params.fieldsToUpsert.keySet()) { def value = params.fieldsToUpsert[key]; if (target[key] != null && target[key] != value) { target[key] = value; } } }"
+  "if (ctx._source.actors == null) { ctx._source.actors = []; } def target = ctx._source.actors.find(objectInArray -> objectInArray[params.targetObject.fieldName] == params.targetObject.fieldValue); if (target == null) { ctx._source.actors.add(params.fieldsToUpsert); } else { for (key in params.fieldsToUpsert.keySet()) { def value = params.fieldsToUpsert[key]; if (target[key] != null && target[key] != value) { target[key] = value; } } }"
 }
 ```
 

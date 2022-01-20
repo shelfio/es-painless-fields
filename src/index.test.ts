@@ -406,7 +406,6 @@ describe('#updateObjectInArray', () => {
     expect(result).toEqual({
       lang: 'painless',
       params: {
-        arrayFieldName: 'actors',
         fieldsToUpdate: {
           hasOscar: true,
           name: 'Leonardo DiCaprio',
@@ -417,7 +416,7 @@ describe('#updateObjectInArray', () => {
         },
       },
       source:
-        'def target = ctx._source[params.arrayFieldName].find(objectInArray -> objectInArray[params.targetObject.fieldName] == params.targetObject.fieldValue); if (target != null) { for (key in params.fieldsToUpdate.keySet()) { def value = params.fieldsToUpdate[key]; if (target[key] != null && target[key] != value) { target[key] = value; } } }',
+        'if (ctx._source.actors != null) { def target = ctx._source.actors.find(objectInArray -> objectInArray[params.targetObject.fieldName] == params.targetObject.fieldValue); if (target != null) { for (key in params.fieldsToUpdate.keySet()) { def value = params.fieldsToUpdate[key]; if (target[key] != null && target[key] != value) { target[key] = value; } } } }',
     });
   });
 });
@@ -437,7 +436,6 @@ describe('#upsertObjectInArray', () => {
     expect(result).toEqual({
       lang: 'painless',
       params: {
-        arrayFieldName: 'actors',
         fieldsToUpsert: {
           name: 'Margot Robbie',
           sex: 'female',
@@ -448,7 +446,7 @@ describe('#upsertObjectInArray', () => {
         },
       },
       source:
-        'if (!ctx._source.containsKey(params.arrayFieldName)) { ctx._source[params.arrayFieldName] = []; } def target = ctx._source[params.arrayFieldName].find(objectInArray -> objectInArray[params.targetObject.fieldName] == params.targetObject.fieldValue); if (target == null) { ctx._source[params.arrayFieldName].add(params.fieldsToUpsert); } else { for (key in params.fieldsToUpsert.keySet()) { def value = params.fieldsToUpsert[key]; if (target[key] != null && target[key] != value) { target[key] = value; } } }',
+        'if (ctx._source.actors == null) { ctx._source.actors = []; } def target = ctx._source.actors.find(objectInArray -> objectInArray[params.targetObject.fieldName] == params.targetObject.fieldValue); if (target == null) { ctx._source.actors.add(params.fieldsToUpsert); } else { for (key in params.fieldsToUpsert.keySet()) { def value = params.fieldsToUpsert[key]; if (target[key] != null && target[key] != value) { target[key] = value; } } }',
     });
   });
 });

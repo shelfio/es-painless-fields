@@ -4,7 +4,7 @@ import painlessFields from '../index';
 const client = new Client({node: process.env.ES_URL});
 
 describe('#upsertObjectInArray', () => {
-  it('should insert object in array if it did not exist', async () => {
+  it('should insert object in array if target object exists', async () => {
     await client.create({
       index: 'files-alias',
       id: 'some-file-30',
@@ -82,6 +82,49 @@ describe('#upsertObjectInArray', () => {
           sex: 'female',
         },
       ],
+      name: 'Wolf from wall street',
+    });
+  });
+
+  it('should insert object in array if target object exists and arrayFieldName is nested', async () => {
+    await client.create({
+      index: 'files-alias',
+      id: 'some-file-32',
+      body: {name: 'Wolf from wall street', data: {film: {}}},
+      refresh: true,
+    });
+
+    const painlessScript = painlessFields.upsertObjectInArray({
+      arrayFieldName: 'data.film.actors',
+      targetObject: {fieldName: 'id', fieldValue: 'actor-id-1'},
+      fieldsToUpsert: {name: 'Margot Robbie', sex: 'female'},
+    });
+
+    await client.update({
+      index: 'files-alias',
+      id: 'some-file-32',
+      body: {
+        script: painlessScript,
+      },
+      refresh: true,
+    });
+
+    const updatedDoc = await client.get({
+      index: 'files-alias',
+      id: 'some-file-32',
+    });
+
+    expect(updatedDoc.body._source).toEqual({
+      data: {
+        film: {
+          actors: [
+            {
+              name: 'Margot Robbie',
+              sex: 'female',
+            },
+          ],
+        },
+      },
       name: 'Wolf from wall street',
     });
   });
