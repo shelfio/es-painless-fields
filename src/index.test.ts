@@ -396,23 +396,59 @@ describe('#updateObjectInArray', () => {
     expect(m.updateObjectInArray).toBeInstanceOf(Function);
   });
 
-  it('should return a script to update field in array', () => {
+  it('should return a script to update object in array', () => {
     const result = m.updateObjectInArray({
-      arrayFieldName: 'fields',
-      targetObject: {fieldName: 'key', fieldValue: 'key-value-1'},
-      fieldsToUpdate: {is_searchable: true, key: 'key-value-2'},
+      arrayFieldName: 'actors',
+      targetObject: {fieldName: 'id', fieldValue: 'actor-id-1'},
+      fieldsToUpdate: {name: 'Leonardo DiCaprio', hasOscar: true},
     });
 
     expect(result).toEqual({
       lang: 'painless',
       params: {
+        arrayFieldName: 'actors',
         fieldsToUpdate: {
-          is_searchable: true,
-          key: 'key-value-2',
+          hasOscar: true,
+          name: 'Leonardo DiCaprio',
+        },
+        targetObject: {
+          fieldName: 'id',
+          fieldValue: 'actor-id-1',
         },
       },
       source:
-        'def target = ctx._source.fields.find(objectInArray -> objectInArray.key == key-value-1); if (target != null) { for (key in params.fieldsToUpdate.keySet()) { def value = params.fieldsToUpdate[key]; if (target[key] != null && target[key] != value) { target[key] = value; } } }',
+        'def target = ctx._source[params.arrayFieldName].find(objectInArray -> objectInArray[params.targetObject.fieldName] == params.targetObject.fieldValue); if (target != null) { for (key in params.fieldsToUpdate.keySet()) { def value = params.fieldsToUpdate[key]; if (target[key] != null && target[key] != value) { target[key] = value; } } }',
+    });
+  });
+});
+
+describe('#upsertObjectInArray', () => {
+  it('should export a upsertObjectInArray function', () => {
+    expect(m.upsertObjectInArray).toBeInstanceOf(Function);
+  });
+
+  it('should return a script to upsert object in array', () => {
+    const result = m.upsertObjectInArray({
+      arrayFieldName: 'actors',
+      targetObject: {fieldName: 'id', fieldValue: 'actor-id-1'},
+      fieldsToUpsert: {name: 'Margot Robbie', sex: 'female'},
+    });
+
+    expect(result).toEqual({
+      lang: 'painless',
+      params: {
+        arrayFieldName: 'actors',
+        fieldsToUpsert: {
+          name: 'Margot Robbie',
+          sex: 'female',
+        },
+        targetObject: {
+          fieldName: 'id',
+          fieldValue: 'actor-id-1',
+        },
+      },
+      source:
+        'if (!ctx._source.containsKey(params.arrayFieldName)) { ctx._source[params.arrayFieldName] = []; } def target = ctx._source[params.arrayFieldName].find(objectInArray -> objectInArray[params.targetObject.fieldName] == params.targetObject.fieldValue); if (target == null) { ctx._source[params.arrayFieldName].add(params.fieldsToUpsert); } else { for (key in params.fieldsToUpsert.keySet()) { def value = params.fieldsToUpsert[key]; if (target[key] != null && target[key] != value) { target[key] = value; } } }',
     });
   });
 });

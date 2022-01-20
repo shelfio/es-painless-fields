@@ -204,13 +204,14 @@ const main = {
     fieldsToUpdate: Record<string, unknown>;
   }): PainlessScript {
     const {arrayFieldName, targetObject, fieldsToUpdate} = updateObjectInArrayParams;
-    const sourceField = `ctx._source.${arrayFieldName}`;
 
     const source = convertMultilineScriptToInline(`
-      def target = ${sourceField}.find(objectInArray -> objectInArray.${targetObject.fieldName} == ${targetObject.fieldValue});
+      def target = ctx._source[params.arrayFieldName].find(objectInArray -> objectInArray[params.targetObject.fieldName] == params.targetObject.fieldValue);
+
       if (target != null) {
         for (key in params.fieldsToUpdate.keySet()) {
           def value = params.fieldsToUpdate[key];
+
           if (target[key] != null && target[key] != value) {
             target[key] = value;
           }
@@ -222,7 +223,47 @@ const main = {
       lang: 'painless',
       source,
       params: {
+        arrayFieldName,
+        targetObject,
         fieldsToUpdate,
+      },
+    };
+  },
+
+  upsertObjectInArray(upsertObjectInArrayParams: {
+    arrayFieldName: string;
+    targetObject: {fieldName: string; fieldValue: unknown};
+    fieldsToUpsert: Record<string, unknown>;
+  }): PainlessScript {
+    const {arrayFieldName, targetObject, fieldsToUpsert} = upsertObjectInArrayParams;
+
+    const source = convertMultilineScriptToInline(`
+      if (!ctx._source.containsKey(params.arrayFieldName)) {
+        ctx._source[params.arrayFieldName] = [];
+      }
+
+      def target = ctx._source[params.arrayFieldName].find(objectInArray -> objectInArray[params.targetObject.fieldName] == params.targetObject.fieldValue);
+
+      if (target == null) {
+        ctx._source[params.arrayFieldName].add(params.fieldsToUpsert);
+      } else {
+        for (key in params.fieldsToUpsert.keySet()) {
+          def value = params.fieldsToUpsert[key];
+
+          if (target[key] != null && target[key] != value) {
+            target[key] = value;
+          }
+        }
+      }
+  `);
+
+    return {
+      lang: 'painless',
+      source,
+      params: {
+        arrayFieldName,
+        targetObject,
+        fieldsToUpsert,
       },
     };
   },
