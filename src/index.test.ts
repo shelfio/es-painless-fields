@@ -390,3 +390,29 @@ describe('#divide', () => {
     });
   });
 });
+
+describe('#updateObjectInArray', () => {
+  it('should export updateObjectInArray function', () => {
+    expect(m.updateObjectInArray).toBeInstanceOf(Function);
+  });
+
+  it('should return a script to update field in array', () => {
+    const result = m.updateObjectInArray({
+      arrayFieldName: 'fields',
+      targetObject: {fieldName: 'key', fieldValue: 'key-value-1'},
+      fieldsToUpdate: {is_searchable: true, key: 'key-value-2'},
+    });
+
+    expect(result).toEqual({
+      lang: 'painless',
+      params: {
+        fieldsToUpdate: {
+          is_searchable: true,
+          key: 'key-value-2',
+        },
+      },
+      source:
+        'def target = ctx._source.fields.find(objectInArray -> objectInArray.key == key-value-1); if (target != null) { for (key in params.fieldsToUpdate.keySet()) { def value = params.fieldsToUpdate[key]; if (target[key] != null && target[key] != value) { target[key] = value; } } }',
+    });
+  });
+});

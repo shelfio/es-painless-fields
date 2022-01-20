@@ -197,6 +197,35 @@ const main = {
       params: source ? {_div: unflatten(fieldsMap)} : {},
     };
   },
+
+  updateObjectInArray(updateObjectInArrayParams: {
+    arrayFieldName: string;
+    targetObject: {fieldName: string; fieldValue: unknown};
+    fieldsToUpdate: Record<string, unknown>;
+  }): PainlessScript {
+    const {arrayFieldName, targetObject, fieldsToUpdate} = updateObjectInArrayParams;
+    const sourceField = `ctx._source.${arrayFieldName}`;
+
+    const source = convertMultilineScriptToInline(`
+      def target = ${sourceField}.find(objectInArray -> objectInArray.${targetObject.fieldName} == ${targetObject.fieldValue});
+      if (target != null) {
+        for (key in params.fieldsToUpdate.keySet()) {
+          def value = params.fieldsToUpdate[key];
+          if (target[key] != null && target[key] != value) {
+            target[key] = value;
+          }
+        }
+      }
+    `);
+
+    return {
+      lang: 'painless',
+      source,
+      params: {
+        fieldsToUpdate,
+      },
+    };
+  },
 };
 
 function convertMultilineScriptToInline(script: string): string {
