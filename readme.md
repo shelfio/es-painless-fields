@@ -240,6 +240,8 @@ Returns a script which updates target object's fields in array. Example:
 
 Type: `Object`
 
+arrayFieldName can be nested: 'data.film.actors'
+
 Parameters required to remove object from array. Example:
 
 ```js
@@ -255,14 +257,13 @@ Returns a script which removes target object from array. Example:
 {
   "lang": "painless",
   "params": {
-    "arrayFieldName": "actors",
     "targetObject": {
       "fieldName": "id",
       "fieldValue": "actor-id-1"
     }
   },
   "source":
-  "if (ctx._source.containsKey(params.arrayFieldName)) { ctx._source[params.arrayFieldName].removeIf(objectInArray -> objectInArray[params.targetObject.fieldName] == params.targetObject.fieldValue); }"
+  "if (ctx._source.actors != null) { ctx._source.actors.removeIf(objectInArray -> objectInArray[params.targetObject.fieldName] == params.targetObject.fieldValue); }"
 }
 ```
 

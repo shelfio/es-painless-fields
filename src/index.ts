@@ -232,10 +232,11 @@ const main = {
     targetObject: {fieldName: string; fieldValue: unknown};
   }): PainlessScript {
     const {arrayFieldName, targetObject} = removeObjectFromArrayParams;
+    const sourceArrayField = `ctx._source.${arrayFieldName}`;
 
     const source = convertMultilineScriptToInline(`
-      if (ctx._source.containsKey(params.arrayFieldName)) {
-        ctx._source[params.arrayFieldName].removeIf(objectInArray -> objectInArray[params.targetObject.fieldName] == params.targetObject.fieldValue);
+      if (${sourceArrayField} != null) {
+        ${sourceArrayField}.removeIf(objectInArray -> objectInArray[params.targetObject.fieldName] == params.targetObject.fieldValue);
       }
   `);
 
@@ -243,7 +244,6 @@ const main = {
       lang: 'painless',
       source,
       params: {
-        arrayFieldName,
         targetObject,
       },
     };

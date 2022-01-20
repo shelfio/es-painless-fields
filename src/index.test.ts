@@ -431,14 +431,13 @@ describe('#removeObjectFromArray', () => {
     expect(result).toEqual({
       lang: 'painless',
       params: {
-        arrayFieldName: 'actors',
         targetObject: {
           fieldName: 'id',
           fieldValue: 'actor-id-1',
         },
       },
       source:
-        'if (ctx._source.containsKey(params.arrayFieldName)) { ctx._source[params.arrayFieldName].removeIf(objectInArray -> objectInArray[params.targetObject.fieldName] == params.targetObject.fieldValue); }',
+        'if (ctx._source.actors != null) { ctx._source.actors.removeIf(objectInArray -> objectInArray[params.targetObject.fieldName] == params.targetObject.fieldValue); }',
     });
   });
 });
