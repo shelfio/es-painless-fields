@@ -226,6 +226,28 @@ const main = {
       },
     };
   },
+
+  removeObjectFromArray(removeObjectFromArrayParams: {
+    arrayFieldName: string;
+    targetObject: {fieldName: string; fieldValue: unknown};
+  }): PainlessScript {
+    const {arrayFieldName, targetObject} = removeObjectFromArrayParams;
+
+    const source = convertMultilineScriptToInline(`
+      if (ctx._source.containsKey(params.arrayFieldName)) {
+        ctx._source[params.arrayFieldName].removeIf(objectInArray -> objectInArray[params.targetObject.fieldName] == params.targetObject.fieldValue);
+      }
+  `);
+
+    return {
+      lang: 'painless',
+      source,
+      params: {
+        arrayFieldName,
+        targetObject,
+      },
+    };
+  },
 };
 
 function convertMultilineScriptToInline(script: string): string {

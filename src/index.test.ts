@@ -416,3 +416,29 @@ describe('#updateObjectInArray', () => {
     });
   });
 });
+
+describe('#removeObjectFromArray', () => {
+  it('should export removeObjectFromArray function', () => {
+    expect(m.removeObjectFromArray).toBeInstanceOf(Function);
+  });
+
+  it('should return a script to remove object from array', () => {
+    const result = m.removeObjectFromArray({
+      arrayFieldName: 'actors',
+      targetObject: {fieldName: 'id', fieldValue: 'actor-id-1'},
+    });
+
+    expect(result).toEqual({
+      lang: 'painless',
+      params: {
+        arrayFieldName: 'actors',
+        targetObject: {
+          fieldName: 'id',
+          fieldValue: 'actor-id-1',
+        },
+      },
+      source:
+        'if (ctx._source.containsKey(params.arrayFieldName)) { ctx._source[params.arrayFieldName].removeIf(objectInArray -> objectInArray[params.targetObject.fieldName] == params.targetObject.fieldValue); }',
+    });
+  });
+});
