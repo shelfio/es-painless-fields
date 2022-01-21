@@ -204,15 +204,19 @@ const main = {
     fieldsToUpdate: Record<string, unknown>;
   }): PainlessScript {
     const {arrayFieldName, targetObject, fieldsToUpdate} = updateObjectInArrayParams;
-    const sourceField = `ctx._source.${arrayFieldName}`;
+    const sourceArrayField = `ctx._source.${arrayFieldName}`;
 
     const source = convertMultilineScriptToInline(`
-      def target = ${sourceField}.find(objectInArray -> objectInArray.${targetObject.fieldName} == ${targetObject.fieldValue});
-      if (target != null) {
-        for (key in params.fieldsToUpdate.keySet()) {
-          def value = params.fieldsToUpdate[key];
-          if (target[key] != null && target[key] != value) {
-            target[key] = value;
+      if (${sourceArrayField} != null) {
+        def target = ${sourceArrayField}.find(objectInArray -> objectInArray[params.targetObject.fieldName] == params.targetObject.fieldValue);
+
+        if (target != null) {
+          for (key in params.fieldsToUpdate.keySet()) {
+            def value = params.fieldsToUpdate[key];
+
+            if (target[key] != null && target[key] != value) {
+              target[key] = value;
+            }
           }
         }
       }
@@ -222,7 +226,46 @@ const main = {
       lang: 'painless',
       source,
       params: {
+        targetObject,
         fieldsToUpdate,
+      },
+    };
+  },
+
+  upsertObjectInArray(upsertObjectInArrayParams: {
+    arrayFieldName: string;
+    targetObject: {fieldName: string; fieldValue: unknown};
+    fieldsToUpsert: Record<string, unknown>;
+  }): PainlessScript {
+    const {arrayFieldName, targetObject, fieldsToUpsert} = upsertObjectInArrayParams;
+    const sourceArrayField = `ctx._source.${arrayFieldName}`;
+
+    const source = convertMultilineScriptToInline(`
+      if (${sourceArrayField} == null) {
+        ${sourceArrayField} = [];
+      }
+
+      def target = ${sourceArrayField}.find(objectInArray -> objectInArray[params.targetObject.fieldName] == params.targetObject.fieldValue);
+
+      if (target == null) {
+        ${sourceArrayField}.add(params.fieldsToUpsert);
+      } else {
+        for (key in params.fieldsToUpsert.keySet()) {
+          def value = params.fieldsToUpsert[key];
+
+          if (target[key] != null && target[key] != value) {
+            target[key] = value;
+          }
+        }
+      }
+  `);
+
+    return {
+      lang: 'painless',
+      source,
+      params: {
+        targetObject,
+        fieldsToUpsert,
       },
     };
   },

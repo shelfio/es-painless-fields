@@ -22,6 +22,7 @@ aims to ease partial bulk document updates.
 - In-place **multiply** values in fields
 - In-place **divide** values in fields
 - In-place **updateObjectInArray** - updates object in array
+- In-place **upsertObjectInArray** - upserts object in array
 - In-place **removeObjectFromArray** - removes object from array
 - ... to be done
 
@@ -208,6 +209,8 @@ Returns a script which removes items from array. Example:
 
 Type: `Object`
 
+arrayFieldName can be nested: 'data.film.actors'
+
 Parameters required to update object's fields in array. Example:
 
 ```js
@@ -227,10 +230,53 @@ Returns a script which updates target object's fields in array. Example:
     "fieldsToUpdate": {
       "name": "Leonardo DiCaprio",
       "hasOscar": true
+    },
+    "targetObject": {
+      "fieldName": "id",
+      "fieldValue": "actor-id-1"
     }
   },
   "source":
-  "def target = ctx._source.fields.find(objectInArray -> objectInArray.key == key-value-1); if (target != null) { for (key in params.fieldsToUpdate.keySet()) { def value = params.fieldsToUpdate[key]; if (target[key] != null && target[key] != value) { target[key] = value; } } }"
+  "if (ctx._source.actors != null) { def target = ctx._source.actors.find(objectInArray -> objectInArray[params.targetObject.fieldName] == params.targetObject.fieldValue); if (target != null) { for (key in params.fieldsToUpdate.keySet()) { def value = params.fieldsToUpdate[key]; if (target[key] != null && target[key] != value) { target[key] = value; } } } }"
+}
+```
+
+### .upsertObjectInArray(upsertObjectInArrayParams)
+
+#### upsertObjectInArrayParams
+
+Type: `Object`
+
+If the target object exists, its fields will be updated based on fieldsToUpsert. If the target object does not exist, new object will be inserted in array based on fieldsToUpsert.
+
+arrayFieldName can be nested: 'data.film.actors'
+
+Parameters required to upsert object's fields in array. Example:
+
+```js
+const upsertObjectInArrayParams = {
+  arrayFieldName: 'actors',
+  targetObject: {fieldName: 'id', fieldValue: 'actor-id-1'},
+  fieldsToUpsert: {name: 'Margot Robbie'},
+}
+```
+
+Returns a script which upserts target object's fields in array. Example:
+
+```json
+{
+  "lang": "painless",
+  "params": {
+    "fieldsToUpsert": {
+      "name": "Margot Robbie"
+    },
+    "targetObject": {
+      "fieldName": "id",
+      "fieldValue": "actor-id-1"
+    }
+  },
+  "source":
+  "if (ctx._source.actors == null) { ctx._source.actors = []; } def target = ctx._source.actors.find(objectInArray -> objectInArray[params.targetObject.fieldName] == params.targetObject.fieldValue); if (target == null) { ctx._source.actors.add(params.fieldsToUpsert); } else { for (key in params.fieldsToUpsert.keySet()) { def value = params.fieldsToUpsert[key]; if (target[key] != null && target[key] != value) { target[key] = value; } } }"
 }
 ```
 
