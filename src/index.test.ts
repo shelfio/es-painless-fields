@@ -450,3 +450,28 @@ describe('#upsertObjectInArray', () => {
     });
   });
 });
+
+describe('#removeObjectFromArray', () => {
+  it('should export removeObjectFromArray function', () => {
+    expect(m.removeObjectFromArray).toBeInstanceOf(Function);
+  });
+
+  it('should return a script to remove object from array', () => {
+    const result = m.removeObjectFromArray({
+      arrayFieldName: 'actors',
+      targetObject: {fieldName: 'id', fieldValue: 'actor-id-1'},
+    });
+
+    expect(result).toEqual({
+      lang: 'painless',
+      params: {
+        targetObject: {
+          fieldName: 'id',
+          fieldValue: 'actor-id-1',
+        },
+      },
+      source:
+        'if (ctx._source.actors != null) { ctx._source.actors.removeIf(objectInArray -> objectInArray[params.targetObject.fieldName] == params.targetObject.fieldValue); }',
+    });
+  });
+});

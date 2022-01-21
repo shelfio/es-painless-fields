@@ -23,6 +23,7 @@ aims to ease partial bulk document updates.
 - In-place **divide** values in fields
 - In-place **updateObjectInArray** - updates object in array
 - In-place **upsertObjectInArray** - upserts object in array
+- In-place **removeObjectFromArray** - removes object from array
 - ... to be done
 
 ## Usage
@@ -276,6 +277,39 @@ Returns a script which upserts target object's fields in array. Example:
   },
   "source":
   "if (ctx._source.actors == null) { ctx._source.actors = []; } def target = ctx._source.actors.find(objectInArray -> objectInArray[params.targetObject.fieldName] == params.targetObject.fieldValue); if (target == null) { ctx._source.actors.add(params.fieldsToUpsert); } else { for (key in params.fieldsToUpsert.keySet()) { def value = params.fieldsToUpsert[key]; if (target[key] != null && target[key] != value) { target[key] = value; } } }"
+}
+```
+
+### .removeObjectFromArray(removeObjectFromArrayParams)
+
+#### removeObjectFromArrayParams
+
+Type: `Object`
+
+arrayFieldName can be nested: 'data.film.actors'
+
+Parameters required to remove object from array. Example:
+
+```js
+const removeObjectFromArrayParams = {
+  arrayFieldName: 'actors',
+  targetObject: {fieldName: 'id', fieldValue: 'actor-id-1'},
+}
+```
+
+Returns a script which removes target object from array. Example:
+
+```json
+{
+  "lang": "painless",
+  "params": {
+    "targetObject": {
+      "fieldName": "id",
+      "fieldValue": "actor-id-1"
+    }
+  },
+  "source":
+  "if (ctx._source.actors != null) { ctx._source.actors.removeIf(objectInArray -> objectInArray[params.targetObject.fieldName] == params.targetObject.fieldValue); }"
 }
 ```
 
