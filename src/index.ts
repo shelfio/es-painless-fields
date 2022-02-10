@@ -1,4 +1,4 @@
-import {unflatten} from 'flat';
+import {flatten, unflatten} from 'flat';
 
 type PainlessScript = {
   lang: 'painless';
@@ -16,6 +16,20 @@ const main = {
       lang: 'painless',
       source,
       params: unflatten(fieldsMap),
+    };
+  },
+
+  setNotFlattened(fieldsMap: Record<string, unknown> = {}): PainlessScript {
+    const flatFieldsMap: Record<string, unknown> = flatten(fieldsMap, {safe: true});
+
+    const source = Object.keys(flatFieldsMap)
+      .map(key => `ctx._source.${key} = params.${key};`)
+      .join(' ');
+
+    return {
+      lang: 'painless',
+      source,
+      params: fieldsMap,
     };
   },
 
