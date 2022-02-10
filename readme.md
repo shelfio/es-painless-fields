@@ -15,6 +15,7 @@ documents in-place by scripts, so you cannot rely on ES to replace document by p
 aims to ease partial bulk document updates.
 
 - In-place **set** values to fields
+- In-place **setNotFlattened** values to fields
 - In-place **unset** values to fields
 - In-place **replace** values in fields
 - In-place **increment** values in fields
@@ -54,6 +55,16 @@ Type: `Object`
 Object fields which you would like to set. Example: `{a: 1, b: 2}`
 
 Also can be in a flat form, like `{'a.b.c': 1}`
+
+### .setNotFlattened(fieldsMap)
+
+#### fieldsMap
+
+Type: `Object`
+
+Object fields which you would like to set. Example: `{a: 1, b: false, c: {x: [{o: null}], y: {z: "name"}}}`
+
+Array values will be fully overwritten by array values from fieldsMap
 
 ### .unset(fields)
 

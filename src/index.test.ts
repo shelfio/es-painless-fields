@@ -53,6 +53,53 @@ describe('#set', () => {
   });
 });
 
+describe('#setNotFlattened', () => {
+  it('should export a setNotFlattened function', () => {
+    expect(m.setNotFlattened).toBeInstanceOf(Function);
+  });
+
+  it('should return script to set items from nested object', () => {
+    const fieldsMap = {
+      id: 'film-id-1',
+      name: 'titanic',
+      meta: {
+        year: 1997,
+        hasOscar: true,
+        actors: [{name: 'Kate Winslet'}, {name: 'Leonardo DiCaprio'}],
+        extra: {
+          rating: 9.1,
+        },
+      },
+    };
+    const result = m.setNotFlattened(fieldsMap);
+
+    expect(result).toEqual({
+      lang: 'painless',
+      params: {
+        id: 'film-id-1',
+        meta: {
+          actors: [
+            {
+              name: 'Kate Winslet',
+            },
+            {
+              name: 'Leonardo DiCaprio',
+            },
+          ],
+          extra: {
+            rating: 9.1,
+          },
+          hasOscar: true,
+          year: 1997,
+        },
+        name: 'titanic',
+      },
+      source:
+        'ctx._source.id = params.id; ctx._source.name = params.name; ctx._source.meta.year = params.meta.year; ctx._source.meta.hasOscar = params.meta.hasOscar; ctx._source.meta.actors = params.meta.actors; ctx._source.meta.extra.rating = params.meta.extra.rating;',
+    });
+  });
+});
+
 describe('#unset', () => {
   it('should export an unset function', () => {
     expect(m.unset).toBeInstanceOf(Function);
