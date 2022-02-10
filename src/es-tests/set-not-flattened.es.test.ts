@@ -4,7 +4,7 @@ import painlessFields from '../index';
 const client = new Client({node: process.env.ES_URL});
 
 describe('#setNotFlattened', () => {
-  it('should set fields in ES', async () => {
+  it('should set not flattended fields in ES', async () => {
     await client.create({
       index: 'files-alias',
       id: 'some-file-60',
