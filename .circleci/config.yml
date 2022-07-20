@@ -6,7 +6,7 @@ orbs:
 parameters:
   node_version:
     type: string
-    default: '16.13.0-browsers'
+    default: '16.15.1-browsers'
 
 commands:
   install_deps:
