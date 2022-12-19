@@ -62,7 +62,7 @@
     "@types/flat": "0.0.28",
     "@types/jest": "26.0.21",
     "@types/node": "16",
-    "eslint": "8.5.0",
+    "eslint": "8.30.0",
     "husky": "7.0.4",
     "jest": "27.4.5",
     "lint-staged": "12.1.4",
