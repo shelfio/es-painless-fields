@@ -41,7 +41,7 @@ describe('#setNotFlattened', () => {
       id: 'some-file-60',
     });
 
-    expect(updatedDoc.body._source).toEqual({
+    expect(updatedDoc._source).toEqual({
       id: 'film-id-1',
       meta: {
         actors: [

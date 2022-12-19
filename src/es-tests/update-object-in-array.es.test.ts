@@ -35,7 +35,7 @@ describe('#updateObjectInArray', () => {
       id: 'some-file-20',
     });
 
-    expect(updatedDoc.body._source).toEqual({
+    expect(updatedDoc._source).toEqual({
       actors: [
         {
           hasOscar: true,
@@ -78,7 +78,7 @@ describe('#updateObjectInArray', () => {
       id: 'some-file-21',
     });
 
-    expect(updatedDoc.body._source).toEqual({
+    expect(updatedDoc._source).toEqual({
       actors: [
         {
           id: 'actor-id-1',
@@ -123,7 +123,7 @@ describe('#updateObjectInArray', () => {
       id: 'some-file-22',
     });
 
-    expect(updatedDoc.body._source).toEqual({
+    expect(updatedDoc._source).toEqual({
       actors: [
         {
           id: 'actor-id-2',
@@ -168,7 +168,7 @@ describe('#updateObjectInArray', () => {
       id: 'some-file-23',
     });
 
-    expect(updatedDoc.body._source).toEqual({
+    expect(updatedDoc._source).toEqual({
       data: {
         film: {
           actors: [
