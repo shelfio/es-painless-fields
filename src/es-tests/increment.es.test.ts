@@ -28,7 +28,7 @@ describe('#increment', () => {
       id: 'some-file-1',
     });
 
-    expect(updatedDoc.body._source).toEqual({name: 'text.txt', viewsCount: 1});
+    expect(updatedDoc._source).toEqual({name: 'text.txt', viewsCount: 1});
   });
 
   it('should increment views count in ES if property did not exist', async () => {
@@ -55,6 +55,6 @@ describe('#increment', () => {
       id: 'some-file-2',
     });
 
-    expect(updatedDoc.body._source).toEqual({name: 'text.txt', viewsCount: 1});
+    expect(updatedDoc._source).toEqual({name: 'text.txt', viewsCount: 1});
   });
 });

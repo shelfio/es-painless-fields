@@ -32,7 +32,7 @@ describe('#upsertObjectInArray', () => {
       id: 'some-file-30',
     });
 
-    expect(updatedDoc.body._source).toEqual({
+    expect(updatedDoc._source).toEqual({
       actors: [
         {
           name: 'Margot Robbie',
@@ -74,7 +74,7 @@ describe('#upsertObjectInArray', () => {
       id: 'some-file-31',
     });
 
-    expect(updatedDoc.body._source).toEqual({
+    expect(updatedDoc._source).toEqual({
       actors: [
         {
           id: 'actor-id-1',
@@ -114,7 +114,7 @@ describe('#upsertObjectInArray', () => {
       id: 'some-file-32',
     });
 
-    expect(updatedDoc.body._source).toEqual({
+    expect(updatedDoc._source).toEqual({
       data: {
         film: {
           actors: [

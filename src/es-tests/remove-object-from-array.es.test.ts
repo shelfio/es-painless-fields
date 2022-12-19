@@ -31,7 +31,7 @@ describe('#removeObjectFromArray', () => {
       id: 'some-actor-40',
     });
 
-    expect(updatedDoc.body._source).toEqual({name: 'Wolf from wall street', actors: []});
+    expect(updatedDoc._source).toEqual({name: 'Wolf from wall street', actors: []});
   });
 
   it('should not remove object from array if target object does not exist', async () => {
@@ -61,7 +61,7 @@ describe('#removeObjectFromArray', () => {
       id: 'some-actor-41',
     });
 
-    expect(updatedDoc.body._source).toEqual({
+    expect(updatedDoc._source).toEqual({
       name: 'Wolf from wall street',
       actors: [{id: 'actor-id-2'}],
     });
@@ -94,7 +94,7 @@ describe('#removeObjectFromArray', () => {
       id: 'some-actor-42',
     });
 
-    expect(updatedDoc.body._source).toEqual({
+    expect(updatedDoc._source).toEqual({
       name: 'Wolf from wall street',
     });
   });
@@ -126,7 +126,7 @@ describe('#removeObjectFromArray', () => {
       id: 'some-actor-44',
     });
 
-    expect(updatedDoc.body._source).toEqual({
+    expect(updatedDoc._source).toEqual({
       name: 'Wolf from wall street',
       data: {film: {actors: []}},
     });
