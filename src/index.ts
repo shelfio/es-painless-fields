@@ -45,8 +45,8 @@ const main = {
 
           assertKey += currentMatch
 
-          prefix += `if (!ctx._source${assertKey}) {
-            ctx._source${assertKey} = {}
+          prefix += `if (ctx._source${assertKey} == null) {
+            ctx._source${assertKey} = [:]
           }
           `
         }
