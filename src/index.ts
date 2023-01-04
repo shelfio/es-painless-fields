@@ -6,6 +6,10 @@ type PainlessScript = {
   params?: Record<string, unknown>;
 };
 
+const BRACKET_NOTATION_REGEX = /\.\[/gm;
+const INLINE_SCRIPT_REGEX = /\n\s{1,}/g;
+const BRACKETS_SPLIT_REGEX = /\['[^\[\]]*'\]/gm
+
 const main = {
   set(fieldsMap: Record<string, unknown> = {}): PainlessScript {
     const source = Object.keys(fieldsMap)
@@ -19,12 +23,39 @@ const main = {
     };
   },
 
-  setNotFlattened(fieldsMap: Record<string, unknown> = {}): PainlessScript {
-    const flatFieldsMap: Record<string, unknown> = flatten(fieldsMap, {safe: true});
+  setNotFlattened(fieldsMap: Record<string, unknown> = {}, safe?: boolean): PainlessScript {
+    const flatFieldsMap: Record<string, unknown> = flatten(fieldsMap, {
+      safe: true,
+      transformKey: key => (`['${key}']`)
+    });
 
-    const source = Object.keys(flatFieldsMap)
-      .map(key => `ctx._source.${key} = params.${key};`)
-      .join(' ');
+    const _brackets = Object.keys(flatFieldsMap)
+      .map(convertToBracketNotation);
+
+    let prefix = "";
+
+    if (safe) {
+      _brackets.forEach(bracket => {
+        let match = bracket.match(BRACKETS_SPLIT_REGEX)
+
+        let assertKey = ``
+
+        for (let i = 0; i < match.length - 1; i++) {
+          let currentMatch = match[i]
+
+          assertKey += currentMatch
+
+          prefix += `if (!ctx._source${assertKey}) {
+            ctx._source${assertKey} = {}
+          }
+          `
+        }
+      })
+    }
+
+    const source = prefix + _brackets
+      .map(bracket => `ctx._source${bracket} = params${bracket};`)
+      .join(' ')
 
     return {
       lang: 'painless',
@@ -308,7 +339,11 @@ const main = {
 };
 
 function convertMultilineScriptToInline(script: string): string {
-  return script.replace(/\n\s{1,}/g, ' ').trim();
+  return script.replace(INLINE_SCRIPT_REGEX, ' ').trim();
+}
+
+function convertToBracketNotation(key: string): string {
+  return key.replace(BRACKET_NOTATION_REGEX, "[");
 }
 
 export default main;
