@@ -1,6 +1,6 @@
 {
   "name": "@shelf/es-painless-fields",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "Helpers for bulk update Elasticsearch documents by query using Painless scripts",
   "keywords": [
     "bulk update",
