@@ -76,7 +76,7 @@ describe('#setNotFlattened', () => {
         hasOscar: false,
         extra: {
           rating: 9.5,
-          actors: ["Sam Worthington", "Zoe Saldaña"]
+          actors: ['Sam Worthington', 'Zoe Saldaña'],
         },
       },
     };
@@ -101,7 +101,7 @@ describe('#setNotFlattened', () => {
       meta: {
         extra: {
           rating: 9.5,
-          actors: ["Sam Worthington", "Zoe Saldaña"]
+          actors: ['Sam Worthington', 'Zoe Saldaña'],
         },
         hasOscar: false,
         year: 2022,

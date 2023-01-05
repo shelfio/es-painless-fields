@@ -55,8 +55,8 @@ describe('#set', () => {
   it('should work with hyphens', () => {
     const fieldsMap = {};
 
-    fieldsMap["first-name"] = "John";
-    fieldsMap["last-name"] = "Doe";
+    fieldsMap['first-name'] = 'John';
+    fieldsMap['last-name'] = 'Doe';
 
     const result = m.setNotFlattened(fieldsMap);
 
@@ -64,19 +64,19 @@ describe('#set', () => {
       lang: 'painless',
       source: `ctx._source['first-name'] = params['first-name']; ctx._source['last-name'] = params['last-name'];`,
       params: {
-        'first-name': "John",
-        'last-name': "Doe",
+        'first-name': 'John',
+        'last-name': 'Doe',
       },
     });
   });
 
   it('should assert subobjects with safe mode', () => {
     const fieldsMap = {
-      'first-name': "John",
-      'last-name': "Doe",
+      'first-name': 'John',
+      'last-name': 'Doe',
       metadata: {
-        paying: true
-      }
+        paying: true,
+      },
     };
 
     const result = m.setNotFlattened(fieldsMap, true);
@@ -85,11 +85,11 @@ describe('#set', () => {
       lang: 'painless',
       source: `if (ctx._source['metadata'] == null) { ctx._source['metadata'] = [:] }ctx._source['first-name'] = params['first-name']; ctx._source['last-name'] = params['last-name']; ctx._source['metadata']['paying'] = params['metadata']['paying'];`,
       params: {
-        'first-name': "John",
-        'last-name': "Doe",
+        'first-name': 'John',
+        'last-name': 'Doe',
         metadata: {
           paying: true,
-        }
+        },
       },
     });
   });
@@ -136,8 +136,7 @@ describe('#setNotFlattened', () => {
         },
         name: 'titanic',
       },
-      source:
-        `ctx._source['id'] = params['id']; ctx._source['name'] = params['name']; ctx._source['meta']['year'] = params['meta']['year']; ctx._source['meta']['hasOscar'] = params['meta']['hasOscar']; ctx._source['meta']['actors'] = params['meta']['actors']; ctx._source['meta']['extra']['rating'] = params['meta']['extra']['rating'];`,
+      source: `ctx._source['id'] = params['id']; ctx._source['name'] = params['name']; ctx._source['meta']['year'] = params['meta']['year']; ctx._source['meta']['hasOscar'] = params['meta']['hasOscar']; ctx._source['meta']['actors'] = params['meta']['actors']; ctx._source['meta']['extra']['rating'] = params['meta']['extra']['rating'];`,
     });
   });
 });

@@ -8,7 +8,7 @@ type PainlessScript = {
 
 const BRACKET_NOTATION_REGEX = /\.\[/gm;
 const INLINE_SCRIPT_REGEX = /\n\s{1,}/g;
-const BRACKETS_SPLIT_REGEX = /\['[^\[\]]*'\]/gm
+const BRACKETS_SPLIT_REGEX = /\['[^[\]]*'\]/gm;
 
 const main = {
   set(fieldsMap: Record<string, unknown> = {}): PainlessScript {
@@ -26,21 +26,19 @@ const main = {
   setNotFlattened(fieldsMap: Record<string, unknown> = {}, safe?: boolean): PainlessScript {
     const flatFieldsMap: Record<string, unknown> = flatten(fieldsMap, {
       safe: true,
-      transformKey: key => (`['${key}']`)
+      transformKey: key => `['${key}']`,
     });
 
-    const brackets = Object.keys(flatFieldsMap)
-      .map(convertToBracketNotation);
+    const brackets = Object.keys(flatFieldsMap).map(convertToBracketNotation);
 
-    let prefix = "";
+    let prefix = '';
 
     if (safe) {
-      prefix = assertNullKeys(brackets)
+      prefix = assertNullKeys(brackets);
     }
 
-    const source = prefix + brackets
-      .map(bracket => `ctx._source${bracket} = params${bracket};`)
-      .join(' ')
+    const source =
+      prefix + brackets.map(bracket => `ctx._source${bracket} = params${bracket};`).join(' ');
 
     return {
       lang: 'painless',
@@ -323,26 +321,26 @@ const main = {
   },
 };
 
-function assertNullKeys(brackets: list<string>) : string {
-  let result = "";
+function assertNullKeys(brackets: list<string>): string {
+  let result = '';
 
   brackets.forEach(bracket => {
-    let match = bracket.match(BRACKETS_SPLIT_REGEX)
-    let assertKey = ``
+    const match = bracket.match(BRACKETS_SPLIT_REGEX);
+    let assertKey = ``;
 
     for (let i = 0; i < match.length - 1; i++) {
-      let currentMatch = match[i]
+      const currentMatch = match[i];
 
-      assertKey += currentMatch
+      assertKey += currentMatch;
 
       result += `if (ctx._source${assertKey} == null) {
         ctx._source${assertKey} = [:]
       }
-      `
+      `;
     }
-  })
+  });
 
-  return convertMultilineScriptToInline(result)
+  return convertMultilineScriptToInline(result);
 }
 
 function convertMultilineScriptToInline(script: string): string {
@@ -350,7 +348,7 @@ function convertMultilineScriptToInline(script: string): string {
 }
 
 function convertToBracketNotation(key: string): string {
-  return key.replace(BRACKET_NOTATION_REGEX, "[");
+  return key.replace(BRACKET_NOTATION_REGEX, '[');
 }
 
 export default main;
