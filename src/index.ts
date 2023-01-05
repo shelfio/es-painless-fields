@@ -324,7 +324,7 @@ const main = {
 function assertNullKeys(brackets: string[]): string {
   let result = '';
 
-  brackets.forEach(bracket => {
+  for (const bracket of brackets) {
     const match = bracket.match(BRACKETS_SPLIT_REGEX);
     let assertKey = ``;
 
@@ -338,7 +338,7 @@ function assertNullKeys(brackets: string[]): string {
       }
       `;
     }
-  });
+  }
 
   return convertMultilineScriptToInline(result);
 }
