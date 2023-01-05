@@ -321,7 +321,7 @@ const main = {
   },
 };
 
-function assertNullKeys(brackets: list<string>): string {
+function assertNullKeys(brackets: string[]): string {
   let result = '';
 
   brackets.forEach(bracket => {
