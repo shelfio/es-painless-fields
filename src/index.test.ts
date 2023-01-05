@@ -71,22 +71,25 @@ describe('#set', () => {
   });
 
   it('should assert subobjects with safe mode', () => {
-    const fieldsMap = {};
-
-    fieldsMap["first-name"] = "John";
-    fieldsMap["last-name"] = "Doe";
-    fieldsMap["metadata"] = {
-      paying : true
+    const fieldsMap = {
+      'first-name': "John",
+      'last-name': "Doe",
+      metadata: {
+        paying: true
+      }
     };
 
     const result = m.setNotFlattened(fieldsMap, true);
 
     expect(result).toEqual({
       lang: 'painless',
-      source: `ctx._source['first-name'] = params['first-name']; ctx._source['last-name'] = params['last-name'];`,
+      source: `if (ctx._source['metadata'] == null) { ctx._source['metadata'] = [:] }ctx._source['first-name'] = params['first-name']; ctx._source['last-name'] = params['last-name']; ctx._source['metadata']['paying'] = params['metadata']['paying'];`,
       params: {
         'first-name': "John",
         'last-name': "Doe",
+        metadata: {
+          paying: true,
+        }
       },
     });
   });

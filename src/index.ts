@@ -29,31 +29,16 @@ const main = {
       transformKey: key => (`['${key}']`)
     });
 
-    const _brackets = Object.keys(flatFieldsMap)
+    const brackets = Object.keys(flatFieldsMap)
       .map(convertToBracketNotation);
 
     let prefix = "";
 
     if (safe) {
-      _brackets.forEach(bracket => {
-        let match = bracket.match(BRACKETS_SPLIT_REGEX)
-
-        let assertKey = ``
-
-        for (let i = 0; i < match.length - 1; i++) {
-          let currentMatch = match[i]
-
-          assertKey += currentMatch
-
-          prefix += `if (ctx._source${assertKey} == null) {
-            ctx._source${assertKey} = [:]
-          }
-          `
-        }
-      })
+      prefix = assertNullKeys(brackets)
     }
 
-    const source = prefix + _brackets
+    const source = prefix + brackets
       .map(bracket => `ctx._source${bracket} = params${bracket};`)
       .join(' ')
 
@@ -337,6 +322,28 @@ const main = {
     };
   },
 };
+
+function assertNullKeys(brackets: list<string>) : string {
+  let result = "";
+
+  brackets.forEach(bracket => {
+    let match = bracket.match(BRACKETS_SPLIT_REGEX)
+    let assertKey = ``
+
+    for (let i = 0; i < match.length - 1; i++) {
+      let currentMatch = match[i]
+
+      assertKey += currentMatch
+
+      result += `if (ctx._source${assertKey} == null) {
+        ctx._source${assertKey} = [:]
+      }
+      `
+    }
+  })
+
+  return convertMultilineScriptToInline(result)
+}
 
 function convertMultilineScriptToInline(script: string): string {
   return script.replace(INLINE_SCRIPT_REGEX, ' ').trim();
