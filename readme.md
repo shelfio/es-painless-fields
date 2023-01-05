@@ -56,15 +56,18 @@ Object fields which you would like to set. Example: `{a: 1, b: 2}`
 
 Also can be in a flat form, like `{'a.b.c': 1}`
 
-### .setNotFlattened(fieldsMap)
+### .setNotFlattened(fieldsMap, safeMode?: boolean = false)
 
 #### fieldsMap
 
-Type: `Object`
+Type: `Object`, `Boolean`
 
 Object fields which you would like to set. Example: `{a: 1, b: false, c: {x: [{o: null}], y: {z: "name"}}}`
 
-Array values will be fully overwritten by array values from fieldsMap
+Array values will be fully overwritten by array values from `fieldsMap`.
+
+You can pass `safeMode` as second argument to allow updating deeply nested objects, if they don't exist yet in the ES document.
+For example, set the `{meta:{a:1}}` when ES doc has no `meta` object yet.
 
 ### .unset(fields)
 
@@ -229,7 +232,7 @@ const updateObjectInArrayParams = {
   arrayFieldName: 'actors',
   targetObject: {fieldName: 'id', fieldValue: 'actor-id-1'},
   fieldsToUpdate: {name: 'Leonardo DiCaprio', hasOscar: true},
-}
+};
 ```
 
 Returns a script which updates target object's fields in array. Example:
@@ -247,8 +250,7 @@ Returns a script which updates target object's fields in array. Example:
       "fieldValue": "actor-id-1"
     }
   },
-  "source":
-  "if (ctx._source.actors != null) { def target = ctx._source.actors.find(objectInArray -> objectInArray[params.targetObject.fieldName] == params.targetObject.fieldValue); if (target != null) { for (key in params.fieldsToUpdate.keySet()) { def value = params.fieldsToUpdate[key]; if (target[key] != null && target[key] != value) { target[key] = value; } } } }"
+  "source": "if (ctx._source.actors != null) { def target = ctx._source.actors.find(objectInArray -> objectInArray[params.targetObject.fieldName] == params.targetObject.fieldValue); if (target != null) { for (key in params.fieldsToUpdate.keySet()) { def value = params.fieldsToUpdate[key]; if (target[key] != null && target[key] != value) { target[key] = value; } } } }"
 }
 ```
 
@@ -269,7 +271,7 @@ const upsertObjectInArrayParams = {
   arrayFieldName: 'actors',
   targetObject: {fieldName: 'id', fieldValue: 'actor-id-1'},
   fieldsToUpsert: {name: 'Margot Robbie'},
-}
+};
 ```
 
 Returns a script which upserts target object's fields in array. Example:
@@ -286,8 +288,7 @@ Returns a script which upserts target object's fields in array. Example:
       "fieldValue": "actor-id-1"
     }
   },
-  "source":
-  "if (ctx._source.actors == null) { ctx._source.actors = []; } def target = ctx._source.actors.find(objectInArray -> objectInArray[params.targetObject.fieldName] == params.targetObject.fieldValue); if (target == null) { ctx._source.actors.add(params.fieldsToUpsert); } else { for (key in params.fieldsToUpsert.keySet()) { def value = params.fieldsToUpsert[key]; if (target[key] != null && target[key] != value) { target[key] = value; } } }"
+  "source": "if (ctx._source.actors == null) { ctx._source.actors = []; } def target = ctx._source.actors.find(objectInArray -> objectInArray[params.targetObject.fieldName] == params.targetObject.fieldValue); if (target == null) { ctx._source.actors.add(params.fieldsToUpsert); } else { for (key in params.fieldsToUpsert.keySet()) { def value = params.fieldsToUpsert[key]; if (target[key] != null && target[key] != value) { target[key] = value; } } }"
 }
 ```
 
@@ -305,7 +306,7 @@ Parameters required to remove object from array. Example:
 const removeObjectFromArrayParams = {
   arrayFieldName: 'actors',
   targetObject: {fieldName: 'id', fieldValue: 'actor-id-1'},
-}
+};
 ```
 
 Returns a script which removes target object from array. Example:
@@ -319,8 +320,7 @@ Returns a script which removes target object from array. Example:
       "fieldValue": "actor-id-1"
     }
   },
-  "source":
-  "if (ctx._source.actors != null) { ctx._source.actors.removeIf(objectInArray -> objectInArray[params.targetObject.fieldName] == params.targetObject.fieldValue); }"
+  "source": "if (ctx._source.actors != null) { ctx._source.actors.removeIf(objectInArray -> objectInArray[params.targetObject.fieldName] == params.targetObject.fieldValue); }"
 }
 ```
 
