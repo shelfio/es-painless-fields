@@ -504,7 +504,7 @@ describe('#updateObjectInArray', () => {
         },
       },
       source:
-        'if (ctx._source.actors != null) { def target = ctx._source.actors.find(objectInArray -> objectInArray[params.targetObject.fieldName] == params.targetObject.fieldValue); if (target != null) { for (key in params.fieldsToUpdate.keySet()) { def value = params.fieldsToUpdate[key]; if (target[key] != null && target[key] != value) { target[key] = value; } } } }',
+        'if (ctx._source.actors != null) { def target = ctx._source.actors.find(objectInArray -> objectInArray[params.targetObject.fieldName] == params.targetObject.fieldValue); if (target != null) { for (key in params.fieldsToUpdate.keySet()) { def value = params.fieldsToUpdate[key]; if (target[key] != value) { target[key] = value; } } } }',
     });
   });
 });
@@ -534,7 +534,7 @@ describe('#upsertObjectInArray', () => {
         },
       },
       source:
-        'if (ctx._source.actors == null) { ctx._source.actors = []; } def target = ctx._source.actors.find(objectInArray -> objectInArray[params.targetObject.fieldName] == params.targetObject.fieldValue); if (target == null) { ctx._source.actors.add(params.fieldsToUpsert); } else { for (key in params.fieldsToUpsert.keySet()) { def value = params.fieldsToUpsert[key]; if (target[key] != null && target[key] != value) { target[key] = value; } } }',
+        'if (ctx._source.actors == null) { ctx._source.actors = []; } def target = ctx._source.actors.find(objectInArray -> objectInArray[params.targetObject.fieldName] == params.targetObject.fieldValue); if (target == null) { ctx._source.actors.add(params.fieldsToUpsert); } else { for (key in params.fieldsToUpsert.keySet()) { def value = params.fieldsToUpsert[key]; if (target[key] != value) { target[key] = value; } } }',
     });
   });
 });
