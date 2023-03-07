@@ -18,7 +18,7 @@ describe('#updateObjectInArray', () => {
     const painlessScript = painlessFields.updateObjectInArray({
       arrayFieldName: 'actors',
       targetObject: {fieldName: 'id', fieldValue: 'actor-id-1'},
-      fieldsToUpdate: {name: 'Leonardo DiCaprio', hasOscar: true},
+      fieldsToUpdate: {name: 'Leonardo DiCaprio', hasOscar: true, birthDate: '1974-11-11'},
     });
 
     await client.update({
@@ -41,6 +41,7 @@ describe('#updateObjectInArray', () => {
           hasOscar: true,
           id: 'actor-id-1',
           name: 'Leonardo DiCaprio',
+          birthDate: '1974-11-11',
         },
       ],
       name: 'Wolf from wall street',

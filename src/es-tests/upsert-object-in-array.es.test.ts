@@ -57,7 +57,7 @@ describe('#upsertObjectInArray', () => {
     const painlessScript = painlessFields.upsertObjectInArray({
       arrayFieldName: 'actors',
       targetObject: {fieldName: 'id', fieldValue: 'actor-id-1'},
-      fieldsToUpsert: {name: 'Margot Robbie'},
+      fieldsToUpsert: {name: 'Margot Robbie', birthDate: '1990-07-02'},
     });
 
     await client.update({
@@ -80,6 +80,7 @@ describe('#upsertObjectInArray', () => {
           id: 'actor-id-1',
           name: 'Margot Robbie',
           sex: 'female',
+          birthDate: '1990-07-02',
         },
       ],
       name: 'Wolf from wall street',

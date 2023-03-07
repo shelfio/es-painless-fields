@@ -231,7 +231,7 @@ Parameters required to update object's fields in array. Example:
 const updateObjectInArrayParams = {
   arrayFieldName: 'actors',
   targetObject: {fieldName: 'id', fieldValue: 'actor-id-1'},
-  fieldsToUpdate: {name: 'Leonardo DiCaprio', hasOscar: true},
+  fieldsToUpdate: {name: 'Leonardo DiCaprio', hasOscar: true, birthDate: '1974-11-11'},
 };
 ```
 
@@ -243,14 +243,15 @@ Returns a script which updates target object's fields in array. Example:
   "params": {
     "fieldsToUpdate": {
       "name": "Leonardo DiCaprio",
-      "hasOscar": true
+      "hasOscar": true,
+      "birthDate": "1974-11-11"
     },
     "targetObject": {
       "fieldName": "id",
       "fieldValue": "actor-id-1"
     }
   },
-  "source": "if (ctx._source.actors != null) { def target = ctx._source.actors.find(objectInArray -> objectInArray[params.targetObject.fieldName] == params.targetObject.fieldValue); if (target != null) { for (key in params.fieldsToUpdate.keySet()) { def value = params.fieldsToUpdate[key]; if (target[key] != null && target[key] != value) { target[key] = value; } } } }"
+  "source": "if (ctx._source.actors != null) { def target = ctx._source.actors.find(objectInArray -> objectInArray[params.targetObject.fieldName] == params.targetObject.fieldValue); if (target != null) { for (key in params.fieldsToUpdate.keySet()) { def value = params.fieldsToUpdate[key]; if (target[key] != value) { target[key] = value; } } } }"
 }
 ```
 
@@ -270,7 +271,7 @@ Parameters required to upsert object's fields in array. Example:
 const upsertObjectInArrayParams = {
   arrayFieldName: 'actors',
   targetObject: {fieldName: 'id', fieldValue: 'actor-id-1'},
-  fieldsToUpsert: {name: 'Margot Robbie'},
+  fieldsToUpsert: {name: 'Margot Robbie', birthDate: '1990-07-02'},
 };
 ```
 
@@ -281,14 +282,15 @@ Returns a script which upserts target object's fields in array. Example:
   "lang": "painless",
   "params": {
     "fieldsToUpsert": {
-      "name": "Margot Robbie"
+      "name": "Margot Robbie",
+      "birthDate": "1990-07-02"
     },
     "targetObject": {
       "fieldName": "id",
       "fieldValue": "actor-id-1"
     }
   },
-  "source": "if (ctx._source.actors == null) { ctx._source.actors = []; } def target = ctx._source.actors.find(objectInArray -> objectInArray[params.targetObject.fieldName] == params.targetObject.fieldValue); if (target == null) { ctx._source.actors.add(params.fieldsToUpsert); } else { for (key in params.fieldsToUpsert.keySet()) { def value = params.fieldsToUpsert[key]; if (target[key] != null && target[key] != value) { target[key] = value; } } }"
+  "source": "if (ctx._source.actors == null) { ctx._source.actors = []; } def target = ctx._source.actors.find(objectInArray -> objectInArray[params.targetObject.fieldName] == params.targetObject.fieldValue); if (target == null) { ctx._source.actors.add(params.fieldsToUpsert); } else { for (key in params.fieldsToUpsert.keySet()) { def value = params.fieldsToUpsert[key]; if (target[key] != value) { target[key] = value; } } }"
 }
 ```
 

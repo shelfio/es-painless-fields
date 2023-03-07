@@ -242,7 +242,7 @@ const main = {
           for (key in params.fieldsToUpdate.keySet()) {
             def value = params.fieldsToUpdate[key];
 
-            if (target[key] != null && target[key] != value) {
+            if (target[key] != value) {
               target[key] = value;
             }
           }
@@ -281,7 +281,7 @@ const main = {
         for (key in params.fieldsToUpsert.keySet()) {
           def value = params.fieldsToUpsert[key];
 
-          if (target[key] != null && target[key] != value) {
+          if (target[key] != value) {
             target[key] = value;
           }
         }
