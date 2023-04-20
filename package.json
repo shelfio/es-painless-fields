@@ -60,7 +60,7 @@
     "@shelf/jest-elasticsearch": "5.1.0",
     "@shelf/prettier-config": "1.0.0",
     "@types/flat": "5.0.2",
-    "@types/jest": "29.5.0",
+    "@types/jest": "29.5.1",
     "@types/node": "16",
     "eslint": "8.38.0",
     "husky": "8.0.3",
