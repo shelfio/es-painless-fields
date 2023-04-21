@@ -54,7 +54,7 @@
     "@babel/core": "7.21.4",
     "@babel/preset-env": "7.21.4",
     "@babel/preset-typescript": "7.21.4",
-    "@elastic/elasticsearch": "8.6.0",
+    "@elastic/elasticsearch": "8.7.0",
     "@shelf/babel-config": "1.2.0",
     "@shelf/eslint-config": "2.29.0",
     "@shelf/jest-elasticsearch": "5.1.0",
