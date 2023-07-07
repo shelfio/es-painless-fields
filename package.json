@@ -50,9 +50,9 @@
     "flat": "5.0.2"
   },
   "devDependencies": {
-    "@babel/cli": "7.22.5",
+    "@babel/cli": "7.22.6",
     "@babel/core": "7.22.8",
-    "@babel/preset-env": "7.22.5",
+    "@babel/preset-env": "7.22.7",
     "@babel/preset-typescript": "7.22.5",
     "@elastic/elasticsearch": "8.8.1",
     "@shelf/babel-config": "2.0.1",
