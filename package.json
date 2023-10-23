@@ -23,14 +23,12 @@
     "lib"
   ],
   "scripts": {
-    "build": "rm -rf lib/ && yarn build:types && babel src --out-dir lib --ignore '**/*.test.ts' --extensions '.ts'",
-    "build:types": "tsc --emitDeclarationOnly --declaration --isolatedModules false --declarationDir lib",
+    "build": "tsc",
     "coverage": "yarn test --coverage",
     "lint": "eslint . --ext .js,.ts,.json --fix --quiet",
     "lint:ci": "eslint . --ext .js,.ts,.json --quiet",
-    "prepack": "yarn build",
     "test": "TZ=UTC jest src -c jest.config.unit.js",
-    "test:es": "DEBUG=elasticsearch-local TZ=UTC jest src -c jest.config.js --forceExit",
+    "test:es": "DEBUG=elasticsearch-local TZ=UTC jest src -c jest.config.es.js --forceExit",
     "type-check": "tsc --noEmit",
     "type-check:watch": "npm run type-check -- --watch"
   },
@@ -59,7 +57,7 @@
     "@shelf/eslint-config": "3.2.0",
     "@shelf/jest-elasticsearch": "5.2.0",
     "@shelf/prettier-config": "1.0.0",
-    "@types/flat": "5.0.3",
+    "@types/flat": "5.0.4",
     "@types/jest": "29.5.5",
     "@types/node": "16",
     "eslint": "8.48.0",
