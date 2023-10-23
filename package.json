@@ -27,6 +27,7 @@
     "coverage": "yarn test --coverage",
     "lint": "eslint . --ext .js,.ts,.json --fix --quiet",
     "lint:ci": "eslint . --ext .js,.ts,.json --quiet",
+    "prepack": "yarn build",
     "test": "TZ=UTC jest src -c jest.config.unit.js",
     "test:es": "DEBUG=elasticsearch-local TZ=UTC jest src -c jest.config.js --forceExit",
     "type-check": "tsc --noEmit",
