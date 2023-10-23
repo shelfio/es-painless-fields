@@ -1,7 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/no-var-requires
-const config = require('./jest.config');
+const baseConfig = require('./jest-base-config');
 
 module.exports = {
   testRegex: `.*(?<!integration|es).test.ts$`,
-  ...config,
+  ...baseConfig,
 };
