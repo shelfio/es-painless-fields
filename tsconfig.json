@@ -3,11 +3,14 @@
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "isolatedModules": true,
-    "module": "commonjs",
+    "module": "ESNext",
+    "target": "ESNext",
+    "moduleResolution": "bundler",
+    "declaration": true,
     "skipLibCheck": true,
     "sourceMap": false,
-    "target": "esnext"
+    "outDir": "lib"
   },
   "exclude": ["node_modules"],
-  "include": ["src"]
+  "include": ["src/index.ts"]
 }

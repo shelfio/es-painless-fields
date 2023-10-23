@@ -23,14 +23,12 @@
     "lib"
   ],
   "scripts": {
-    "build": "rm -rf lib/ && yarn build:types && babel src --out-dir lib --ignore '**/*.test.ts' --extensions '.ts'",
-    "build:types": "tsc --emitDeclarationOnly --declaration --isolatedModules false --declarationDir lib",
+    "build": "tsc",
     "coverage": "yarn test --coverage",
     "lint": "eslint . --ext .js,.ts,.json --fix --quiet",
     "lint:ci": "eslint . --ext .js,.ts,.json --quiet",
-    "prepack": "yarn build",
     "test": "TZ=UTC jest src -c jest.config.unit.js",
-    "test:es": "DEBUG=elasticsearch-local TZ=UTC jest src -c jest.config.js --forceExit",
+    "test:es": "DEBUG=elasticsearch-local TZ=UTC jest src -c jest.config.es.js --forceExit",
     "type-check": "tsc --noEmit",
     "type-check:watch": "npm run type-check -- --watch"
   },
@@ -42,26 +40,20 @@
       "eslint --fix"
     ]
   },
-  "babel": {
-    "extends": "@shelf/babel-config/backend"
-  },
   "prettier": "@shelf/prettier-config",
   "dependencies": {
-    "flat": "5.0.2"
+    "flat": "6.0.1"
   },
   "devDependencies": {
-    "@babel/cli": "7.23.0",
-    "@babel/core": "7.23.2",
-    "@babel/preset-env": "7.22.20",
-    "@babel/preset-typescript": "7.23.0",
     "@elastic/elasticsearch": "8.10.0",
     "@shelf/babel-config": "2.0.1",
     "@shelf/eslint-config": "3.10.0",
     "@shelf/jest-elasticsearch": "5.2.0",
     "@shelf/prettier-config": "1.0.0",
-    "@types/flat": "5.0.3",
+    "@types/flat": "5.0.4",
     "@types/jest": "29.5.5",
-    "@types/node": "16",
+    "@types/node": "18",
+    "babel-jest": "29.7.0",
     "eslint": "8.48.0",
     "husky": "8.0.3",
     "jest": "29.7.0",
@@ -70,7 +62,7 @@
     "typescript": "5.2.2"
   },
   "engines": {
-    "node": ">=14"
+    "node": ">=18"
   },
   "publishConfig": {
     "access": "public"
