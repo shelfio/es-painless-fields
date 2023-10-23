@@ -28,7 +28,7 @@
     "lint": "eslint . --ext .js,.ts,.json --fix --quiet",
     "lint:ci": "eslint . --ext .js,.ts,.json --quiet",
     "test": "TZ=UTC jest src -c jest.config.unit.js",
-    "test:es": "DEBUG=elasticsearch-local TZ=UTC jest src -c jest.config.js --forceExit",
+    "test:es": "DEBUG=elasticsearch-local TZ=UTC jest src -c jest.config.es.js --forceExit",
     "type-check": "tsc --noEmit",
     "type-check:watch": "npm run type-check -- --watch"
   },
