@@ -27,7 +27,6 @@
     "coverage": "yarn test --coverage",
     "lint": "eslint . --ext .js,.ts,.json --fix --quiet",
     "lint:ci": "eslint . --ext .js,.ts,.json --quiet",
-    "prepack": "yarn build",
     "test": "TZ=UTC jest src -c jest.config.unit.js",
     "test:es": "DEBUG=elasticsearch-local TZ=UTC jest src -c jest.config.js --forceExit",
     "type-check": "tsc --noEmit",
@@ -46,10 +45,6 @@
     "flat": "6.0.1"
   },
   "devDependencies": {
-    "@babel/cli": "7.23.0",
-    "@babel/core": "7.23.2",
-    "@babel/preset-env": "7.22.20",
-    "@babel/preset-typescript": "7.23.0",
     "@elastic/elasticsearch": "8.10.0",
     "@shelf/babel-config": "2.0.1",
     "@shelf/eslint-config": "3.10.0",
