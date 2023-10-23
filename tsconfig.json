@@ -9,7 +9,7 @@
     "declaration": true,
     "skipLibCheck": true,
     "sourceMap": false,
-    "outDir": "lib",
+    "outDir": "lib"
   },
   "exclude": ["node_modules"],
   "include": ["src/index.ts"]
