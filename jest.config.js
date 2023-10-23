@@ -2,6 +2,7 @@
 const ES_PACKAGES_TO_TRANSFORM = ['flat'];
 
 module.exports = {
+  preset: '@shelf/jest-elasticsearch',
   transform: {
     '\\.[jt]sx?$': [
       'babel-jest',
