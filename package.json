@@ -17,7 +17,10 @@
     "email": "vlad@shelf.io",
     "url": "shelf.io"
   },
-  "main": "lib",
+  "sideEffects": false,
+  "exports": "./lib/index.js",
+  "main": "lib/index.js",
+  "module": "lib/index.js",
   "types": "lib/index.d.ts",
   "files": [
     "lib"
