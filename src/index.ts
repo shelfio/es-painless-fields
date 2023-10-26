@@ -352,4 +352,3 @@ function convertToBracketNotation(key: string): string {
 }
 
 export default main;
-module.exports = main;
