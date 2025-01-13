@@ -50,7 +50,7 @@
   "devDependencies": {
     "@elastic/elasticsearch": "8.17.0",
     "@shelf/babel-config": "3.0.0",
-    "@shelf/eslint-config": "4.2.1",
+    "@shelf/eslint-config": "4.4.0",
     "@shelf/jest-elasticsearch": "5.2.0",
     "@shelf/prettier-config": "1.0.0",
     "@types/flat": "5.0.5",
