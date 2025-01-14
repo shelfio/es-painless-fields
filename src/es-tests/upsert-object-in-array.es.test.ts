@@ -1,5 +1,5 @@
 import {Client} from '@elastic/elasticsearch';
-import painlessFields from '../index';
+import painlessFields from '../index.js';
 
 const client = new Client({node: process.env.ES_URL});
 

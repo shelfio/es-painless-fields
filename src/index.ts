@@ -328,6 +328,10 @@ function assertNullKeys(brackets: string[]): string {
     const match = bracket.match(BRACKETS_SPLIT_REGEX);
     let assertKey = ``;
 
+    if (!match) {
+      continue;
+    }
+
     for (let i = 0; i < match.length - 1; i++) {
       const currentMatch = match[i];
 
