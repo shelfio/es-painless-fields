@@ -30,9 +30,10 @@ aims to ease partial bulk document updates.
 ## Usage
 
 ```js
-const esClient = require('elasticsearch').Client();
-const painlessFields = require('@shelf/es-painless-fields');
+import es from 'elasticsearch';
+import painlessFields from '@shelf/es-painless-fields';
 
+const esClient = es.Client();
 const script = painlessFields.set({a: 1, b: 2});
 
 esClient.updateByQuery({
