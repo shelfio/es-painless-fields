@@ -1,4 +1,4 @@
-import m from './index';
+import m from './index.js';
 
 describe('#set', () => {
   it('should export a set function', () => {
@@ -53,7 +53,7 @@ describe('#set', () => {
   });
 
   it('should work with hyphens', () => {
-    const fieldsMap = {};
+    const fieldsMap: Record<string, string> = {};
 
     fieldsMap['first-name'] = 'John';
     fieldsMap['last-name'] = 'Doe';
@@ -180,7 +180,7 @@ describe('#replace', () => {
   });
 
   it('should handle empty input', () => {
-    const fieldsReplacements = [];
+    const fieldsReplacements: {field: string; pattern: string; substring: string}[] = [];
     const result = m.replace(fieldsReplacements);
 
     expect(result).toEqual({
@@ -218,7 +218,7 @@ describe('#replaceSubArray', () => {
   });
 
   it('should handle empty input', () => {
-    const fieldsReplacements = [];
+    const fieldsReplacements: {field: string; subArray: string[]; newArray: string[]}[] = [];
     const result = m.replaceSubArray(fieldsReplacements);
 
     expect(result).toEqual({
@@ -262,7 +262,7 @@ describe('#removeFromArray', () => {
   });
 
   it('should handle empty input', () => {
-    const fieldsReplacements = [];
+    const fieldsReplacements: {field: string; itemsToRemove: string[]}[] = [];
     const result = m.removeFromArray(fieldsReplacements);
 
     expect(result).toEqual({
