@@ -4,6 +4,7 @@ const ES_PACKAGES_TO_TRANSFORM = ['@elastic/elasticsearch'];
 const config = {
   collectCoverageFrom: ['src/**/*.ts', '!src/**/types.ts'],
   reporters: ['default'],
+  modulePaths: ['<rootDir>/node_modules', '<rootDir>/node_modules/.pnpm/node_modules'],
   transform: {
     '^.+\\.(t|j)sx?$': [
       '@swc/jest',

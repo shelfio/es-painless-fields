@@ -5,7 +5,7 @@
 ## Install
 
 ```
-$ yarn add @shelf/es-painless-fields
+$ pnpm add --save-exact @shelf/es-painless-fields
 ```
 
 ## Features & Motivation
