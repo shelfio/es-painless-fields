@@ -50,7 +50,7 @@
     "@types/flat": "5.0.5",
     "@types/jest": "30.0.0",
     "@types/node": "20.17.12",
-    "eslint": "9.39.1",
+    "eslint": "9.39.2",
     "husky": "9.1.7",
     "jest": "30.2.0",
     "lint-staged": "16.2.7",
