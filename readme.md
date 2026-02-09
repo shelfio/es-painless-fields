@@ -329,8 +329,8 @@ Returns a script which removes target object from array. Example:
 
 ```sh
 $ git checkout master
-$ yarn version
-$ yarn publish
+$ pnpm version patch
+$ pnpm publish
 $ git push origin master --tags
 ```
 
