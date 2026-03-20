@@ -29,8 +29,8 @@ importers:
         specifier: 5.2.0
         version: 5.2.0
       '@shelf/prettier-config':
-        specifier: 1.0.0
-        version: 1.0.0
+        specifier: 1.1.1
+        version: 1.1.1
       '@shelf/tsconfig':
         specifier: ^0.1.0
         version: 0.1.0
@@ -689,8 +689,8 @@ packages:
     resolution: {integrity: sha512-xGbTx0t/RfxcE51x/kb1dqCVxeJk3gYM10AEdlKAMuFjpD3aEIbiGWHzJ2rN4COjPnsiVxK2awxRgT6tiFLj4w==}
     engines: {node: '>=16'}
 
-  '@shelf/prettier-config@1.0.0':
-    resolution: {integrity: sha512-XA+bjQ8LlXo/M+rQ13wrN2CgAdwydgxg2crLy8CWq0lxaUgG61Rngvp5DAP7qU4MrOk+WmBYbKzbZVsi58lWCg==}
+  '@shelf/prettier-config@1.1.1':
+    resolution: {integrity: sha512-Oh1fa+nrzMustpHBwyyy3KWGzS3A4/AyqHc5Qmfp8Rp28kjEMCKuIeOrnqHE8XY+zkoYM9kV66NwU4uHsxpDww==}
 
   '@shelf/tsconfig@0.1.0':
     resolution: {integrity: sha512-EGA8EdCdGU4EE/6XKBbnrJoBu1e/+zhoty/75bbpPRRpOegyjoocRNXYDD6LQ8aKRoughNorbyxGVCZ2R7uUTw==}
@@ -4119,7 +4119,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@shelf/prettier-config@1.0.0': {}
+  '@shelf/prettier-config@1.1.1': {}
 
   '@shelf/tsconfig@0.1.0': {}
 
