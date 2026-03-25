@@ -32,8 +32,8 @@ importers:
         specifier: 1.0.0
         version: 1.0.0
       '@shelf/tsconfig':
-        specifier: ^0.1.0
-        version: 0.1.0
+        specifier: ^0.2.0
+        version: 0.2.0
       '@swc/core':
         specifier: 1.15.3
         version: 1.15.3(@swc/helpers@0.5.17)
@@ -692,9 +692,9 @@ packages:
   '@shelf/prettier-config@1.0.0':
     resolution: {integrity: sha512-XA+bjQ8LlXo/M+rQ13wrN2CgAdwydgxg2crLy8CWq0lxaUgG61Rngvp5DAP7qU4MrOk+WmBYbKzbZVsi58lWCg==}
 
-  '@shelf/tsconfig@0.1.0':
-    resolution: {integrity: sha512-EGA8EdCdGU4EE/6XKBbnrJoBu1e/+zhoty/75bbpPRRpOegyjoocRNXYDD6LQ8aKRoughNorbyxGVCZ2R7uUTw==}
-    engines: {node: '>=12'}
+  '@shelf/tsconfig@0.2.0':
+    resolution: {integrity: sha512-dvIi9tACuL7Ih/FgygWl0yv24HcQqmVETRAHen7uMki84hKA/BN8UVzgULuHylVHgktXcvoanMhBpigc2hKzew==}
+    engines: {node: '>=22.18', pnpm: 10.32.1}
 
   '@sinclair/typebox@0.27.8':
     resolution: {integrity: sha512-+Fj43pSMwJs4KRrH/938Uf+uAELIgVBmQzg/q1YG10djyfA3TnrU8N8XzqCh/okZdszqBQTZf96idMfE5lnwTA==}
@@ -4121,7 +4121,7 @@ snapshots:
 
   '@shelf/prettier-config@1.0.0': {}
 
-  '@shelf/tsconfig@0.1.0': {}
+  '@shelf/tsconfig@0.2.0': {}
 
   '@sinclair/typebox@0.27.8': {}
 
