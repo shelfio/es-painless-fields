@@ -4,7 +4,7 @@ overrides:
   'minimatch@>=9.0.0 <9.0.7': 9.0.7
   strip-ansi: 6.0.1
   undici-types: 6.24.1
-  undici: 6.24.0
+  undici: 6.28.0
   wrap-ansi: 7.0.0
   string-width: 4.2.3
   'eslint-plugin-barrel-files>oxc-resolver': 11.19.1
