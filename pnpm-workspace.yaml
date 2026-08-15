@@ -5,7 +5,7 @@ overrides:
   strip-ansi: 6.0.1
   undici-types: 6.24.1
   undici: 6.24.0
-  wrap-ansi: 7.0.0
+  wrap-ansi: 10.0.0
   string-width: 4.2.3
   'eslint-plugin-barrel-files>oxc-resolver': 11.19.1
   'eslint-plugin-jest>@typescript-eslint/utils': 8.57.2
