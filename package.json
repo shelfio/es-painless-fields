@@ -40,7 +40,7 @@
     "flat": "6.0.1"
   },
   "devDependencies": {
-    "@elastic/elasticsearch": "8.19.1",
+    "@elastic/elasticsearch": "8.19.2",
     "@shelf/eslint-config": "7.1.0",
     "@shelf/jest-elasticsearch": "5.2.0",
     "@shelf/prettier-config": "1.0.0",
