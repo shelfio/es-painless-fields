@@ -9,3 +9,26 @@ overrides:
   string-width: 4.2.3
   'eslint-plugin-barrel-files>oxc-resolver': 11.19.1
   'eslint-plugin-jest>@typescript-eslint/utils': 8.57.2
+lockfile: true
+nodeLinker: 'hoisted'
+trustPolicy: 'no-downgrade'
+blockExoticSubdeps: true
+minimumReleaseAge: 20160
+ignoreScripts: true
+minimumReleaseAgeExclude:
+  - '@shelf/*'
+  # Approved exception (2026-08-23): typescript-eslint 8.67.0, ages out of the quarantine on 2026-08-24
+  - '@typescript-eslint/*'
+
+trustPolicyExclude:
+  - 'semver@6.3.1'
+  - '@swc/core-darwin-arm64@1.15.3'
+  - '@swc/core-darwin-x64@1.15.3'
+  - '@swc/core-linux-arm64-gnu@1.15.3'
+  - '@swc/core-linux-arm64-musl@1.15.3'
+  - '@swc/core-linux-arm-gnueabihf@1.15.3'
+  - '@swc/core-linux-x64-gnu@1.15.3'
+  - '@swc/core-linux-x64-musl@1.15.3'
+  - '@swc/core-win32-arm64-msvc@1.15.3'
+  - '@swc/core-win32-ia32-msvc@1.15.3'
+  - '@swc/core-win32-x64-msvc@1.15.3'
